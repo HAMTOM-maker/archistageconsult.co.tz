@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>About Us</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Helvetica+Neue:400,700&display=swap">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="64x64" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <link rel="shortcut icon" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <style>
+        /* Full-bleed background image, slightly zoomed */
+        html,body{height:100%;margin:0}
+
+        /* Make the document scrollable and limit the hero to 100vh */
+        body{font-family:Montserrat, Arial, sans-serif;overflow:auto}
+
+        /* Prefer locally installed Helvetica Compressed if present on the system */
+        @font-face{
+            font-family: 'HelveticaCompressedLocal';
+            src: local('Helvetica Compressed Regular'), local('HelveticaCompressed-Regular'), local('Helvetica Compressed');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face{
+            font-family: 'HelveticaCompressedLocal';
+            src: local('Helvetica Compressed Medium'), local('HelveticaCompressed-Medium');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        /* Prefer locally installed Haettenschweiler if present */
+    @font-face{
+            font-family: 'HaettenschweilerLocal';
+            src: local('Haettenschweiler'), local('Haettenschweiler Regular'), local('Haettenschweiler-Regular');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+    }
+        .hero{position:relative;height:100vh;overflow:hidden}
+    .slideshow-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:hidden}
+    /* nudge the background image slightly up for better framing */
+    .slide-img{position:absolute;inset:0;width:100vw;height:100vh;object-fit:cover;object-position:center 55%;filter:brightness(1.02);
+        /* subtle drone-like pan & slow-zoom loop */
+    transform-origin: center center;
+    /* slightly faster drone-loop for a livelier effect */
+    animation: droneLoop 10s ease-in-out infinite;
+        will-change: transform;
+    }
+
+    /* Keyframes for the drone video effect: slow zoom + gentle upward pan and return */
+    @keyframes droneLoop {
+        0% {
+            transform: scale(1.06) translateY(0%);
+        }
+        25% {
+            transform: scale(1.09) translateY(-1.5%);
+        }
+        50% {
+            transform: scale(1.12) translateY(-3%);
+        }
+        75% {
+            transform: scale(1.09) translateY(-1.5%);
+        }
+        100% {
+            transform: scale(1.06) translateY(0%);
+        }
+    }
+
+        /* Hamburger + overlay styles (copied from index.html) */
+    .hamburger{position:relative;top:auto;right:auto;width:40px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;z-index:20}
+    .bar{width:36px;height:4px;background-color:#fff;margin:4px 0;border-radius:2px;box-shadow:0 1px 3px rgba(14,13,13,0.2)}
+        .hamburger:hover .bar{background-color:#ffe600;box-shadow:0 0 12px 2px #ffe600}
+
+        .glass-overlay{position:fixed;top:0;right:-40vw;width:40vw;height:100vh;background:rgba(255,245,230,0.55);backdrop-filter:blur(18px) saturate(120%);box-shadow:-8px 0 32px rgba(0,0,0,0.12);transition:right .7s cubic-bezier(.77,.2,.25,1);z-index:30}
+        .glass-overlay.active{right:0}
+    .glass-menu{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:32px;width:80%;}
+    .glass-menu a{font-family:Montserrat, Arial, sans-serif;font-size:1.6rem;color:#222;text-decoration:none;padding:12px 18px 12px 20px;letter-spacing:0.5px;border-radius:6px;position:relative;transition:color .18s ease, transform .18s ease}
+    /* Portfolio-style yellow accent bar on hover */
+    .glass-menu a::before{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%) scaleY(0.88);width:8px;height:56%;border-radius:6px;background:linear-gradient(180deg,#ffd54f 0%,#ffb300 100%);opacity:0;box-shadow:0 6px 18px rgba(255,170,0,0.12);transition:opacity .18s ease, transform .18s ease}
+    .glass-menu a:hover{color:#111;transform:translateX(6px)}
+    .glass-menu a:hover::before{opacity:1;transform:translateY(-50%) scaleY(1)}
+
+    .social-icons{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:28px}
+    .social-icon{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.12);transition:background .2s, box-shadow .2s;cursor:pointer}
+    .social-icon:hover{background:#ffe600;box-shadow:0 0 16px 2px #ffe600}
+
+        /* centered circular logo and title */
+        .center-wrap {
+            position: absolute;
+            top: 40%; /* moved up a bit */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 22;
+            pointer-events: auto;
+        }
+        /* smaller white circular badge for the logo (reduced size) */
+        .center-logo {
+            width: 64px; /* compact modern badge */
+            height: 64px;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: linear-gradient(145deg, #ffffff 0%, #f5f6f8 100%);
+            padding: 2px;
+            box-shadow:
+                0 6px 18px rgba(0,0,0,0.45),
+                0 0 0 3px rgba(255,255,255,0.04) inset;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-sizing: border-box;
+            transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+            -webkit-tap-highlight-color: transparent;
+        }
+    /* glossy highlight */
+        .center-logo::after{
+            content: '';
+            position: absolute;
+            top: 6%;
+            left: 6%;
+            right: 6%;
+            height: 44%;
+            border-radius: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.08));
+            pointer-events: none;
+            mix-blend-mode: screen;
+            transform: translateY(-6%);
+        }
+        .center-logo:hover{ transform: translateY(-6px) scale(1.03); box-shadow: 0 18px 40px rgba(0,0,0,0.5) }
+        /* make the image scale to fill the badge and be circular */
+        .center-logo img { width: 100%; height: 100%; object-fit: cover; display:block; border-radius:50%; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+        /* animation helper: items that will alternate (logo, title, about-text) */
+        .anim-item{
+            opacity: 0;
+            transform: translateY(8px) scale(0.98);
+            /* slowed transitions for a gentler entrance */
+                transition: opacity 3s cubic-bezier(.2,.9,.2,1), transform 3s cubic-bezier(.2,.9,.2,1), filter 3s;
+            pointer-events: none; /* enabled only when visible */
+            will-change: opacity, transform;
+        }
+        .anim-item.visible{
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            filter: drop-shadow(0 10px 28px rgba(0,0,0,0.45));
+        }
+
+        .center-title {
+            display: block;
+            margin-top: 8px;
+            font-family: 'KuroTrial Heavy', Arial, sans-serif;
+            color: #fff;
+            font-size: 1.1rem; /* increased slightly */
+            letter-spacing: 2px;
+            /* layered drop shadow for stronger contrast */
+            text-shadow:
+                0 2px 6px rgba(0,0,0,0.75),
+                0 6px 18px rgba(0,0,0,0.6),
+                0 10px 30px rgba(0,0,0,0.45);
+        }
+
+        /* short about-us blurb under the title */
+        .about-text {
+            margin-top: 12px;
+            max-width: 56ch;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 400;
+            font-size: 3rem; /* much larger as requested */
+            color: #f5f5f5;
+            line-height: 1.02;
+            text-shadow: 0 4px 18px rgba(0,0,0,0.6);
+            margin-left: auto;
+            margin-right: auto;
+            text-transform: none; /* keep lowercase as typed */
+            /* enable smooth pointer-driven floating transforms */
+            transition: transform 220ms cubic-bezier(.2,.9,.2,1), filter 220ms;
+            will-change: transform, filter;
+        }
+
+        /* Mobile responsive rules removed to restore desktop-only layout */
+
+    /* simple menu label styling; actual position provided by .menu-control */
+    .menu-label{font-family:'Montserrat', Arial, sans-serif;font-weight:400;font-size:1rem;color:#fff;letter-spacing:0.5px;text-transform:none}
+
+    /* container to align the label and hamburger on the top-right */
+    .menu-control{position:fixed;top:22px;right:16px;display:flex;align-items:center;gap:10px;z-index:22}
+    /* hero hamburger placed back on hero; keep it fixed and white */
+    .hero-hamburger{position:fixed;top:22px;right:16px;z-index:28;display:flex;align-items:center;gap:10px}
+    .hero-hamburger .hamburger .bar{background-color:#fff}
+    .hero-hamburger .menu-label{color:#fff;font-family:Montserrat, Arial, sans-serif;text-transform:none}
+    .menu-control .hamburger{position:relative;top:0;right:0}
+    /* dark-menu state: used when the page background is light so the menu becomes dark */
+    .dark-menu .menu-label{color:#ffffff}
+    .dark-menu .hamburger .bar{background-color:#ffffff}
+    /* smooth transitions for menu color changes */
+    .menu-label{transition: color .22s ease}
+    .hamburger .bar{transition: background-color .22s ease, box-shadow .18s ease}
+    /* when menu-control is used inside the white band, make it static and align to right */
+    /* the band-menu placeholder should not create spacing on desktop; hide it by default */
+    .white-band .band-menu{display:none}
+    .white-band .band-menu .hamburger{position:relative}
+        
+        /* left-aligned hero title: prefer Haettenschweiler if available */
+        /* left-aligned hero title using Helvetica compressed look (visually compressed) */
+        .hero-left-title{
+            font-family:'HaettenschweilerLocal','Haettenschweiler','HelveticaCompressedLocal','Helvetica Neue','Helvetica','Arial Narrow',Arial,sans-serif;
+            /* make Haettenschweiler feel less compressed */
+            font-weight:400;
+            font-size:3.6rem;
+            color:#111;
+            text-align:left;
+            margin:48px 0;
+            letter-spacing:1.6px;
+            padding-left:6vw;
+            text-transform:uppercase;
+            font-stretch: normal;
+            -webkit-font-smoothing:antialiased;
+            display:inline-block;
+            transform-origin:left center;
+            transform: scaleX(1.06);
+        }
+        /* mobile responsive rules removed: about-text scaling */
+
+        /* full-bleed rectangular bar (spans entire width, moderate height) */
+        .full-bleed-bar{
+            width:100%;
+            height:320px; /* desktop default height */
+            /* layered backgrounds: subtle radial accents; SVG moved to ::before for animation */
+            background-color:#0f1720;
+            background-image:
+                radial-gradient(circle at 18% 12%, rgba(230,178,40,0.06) 0 6%, transparent 20%),
+                radial-gradient(circle at 82% 22%, rgba(255,255,255,0.03) 0 10%, transparent 28%);
+            background-size: cover, cover;
+            background-repeat:no-repeat;
+            background-position: center center, center center;
+            display:block;
+            position:relative;
+            /* ensure proper spacing after hero section */
+            margin-top: 0;
+            overflow: hidden; /* changed from visible to hidden to prevent overlap */
+        }
+        /* White band container that separates hero from the content sections */
+        .white-band{
+            background:#ffffff;
+            /* no extra gap under hero on desktop; content starts immediately */
+            margin-top:0;
+            padding:0 0 48px 0;
+            display:block;
+        }
+        /* mobile-only stats card (hidden by default) */
+        .stats-square-mobile{display:none}
+        /* ensure the bar is constrained inside the white band on wide screens */
+    /* make the abstract bar span full-screen width inside the white band */
+    .white-band .full-bleed-bar{width:100%;margin:0 auto;border-radius:0;overflow:visible}
+        /* animated SVG overlay (abstract lines and soft shapes) */
+        .full-bleed-bar::before{
+            content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 320' preserveAspectRatio='xMidYMid slice'><rect width='1200' height='320' fill='%230f1720'/><g fill='none' stroke='%23e6b828' stroke-width='3' opacity='0.12'><path d='M-50 260 L150 140 L350 220 L550 120 L750 200 L950 100 L1250 260' /></g><g fill='%23ffffff' opacity='0.02'><circle cx='200' cy='60' r='120'/><circle cx='920' cy='40' r='80'/></g></svg>");
+            background-size: 1600px 480px; background-repeat:no-repeat; background-position: 50% 50%;
+            transform-origin:50% 50%;
+            opacity:0.95;
+            will-change: transform;
+            /* faster, slightly stronger motion */
+            animation: floatShapes 7s ease-in-out infinite;
+        }
+
+        /* gentle float animation for abstract shapes */
+        @keyframes floatShapes{
+            0%{ transform: translate3d(0,0,0) rotate(0deg) scale(1);} 
+            20%{ transform: translate3d(-28px,-10px,0) rotate(-0.6deg) scale(1.02);} 
+            40%{ transform: translate3d(-40px,-14px,0) rotate(-1deg) scale(1.03);} 
+            60%{ transform: translate3d(-32px,-12px,0) rotate(-0.6deg) scale(1.02);} 
+            80%{ transform: translate3d(-18px,-6px,0) rotate(-0.3deg) scale(1.01);} 
+            100%{ transform: translate3d(0,0,0) rotate(0deg) scale(1);} 
+        }
+        /* subtle dotted texture on top */
+        .full-bleed-bar::after{
+            content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);background-size:14px 14px;opacity:0.45;mix-blend-mode:overlay;z-index:1;
+        }
+        /* inner container and left tagline inside the bar */
+    .full-bleed-bar .bar-inner{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;position:relative;z-index:3}
+    /* slightly uncompress the tagline for better readability */
+    .full-bleed-bar .bar-tagline{font-family:'HaettenschweilerLocal','Haettenschweiler','HelveticaCompressedLocal','Helvetica Neue',Arial,sans-serif;color:#fff;font-size:3.2rem;letter-spacing:2.4px;text-transform:uppercase;margin-left:1.5vw;text-shadow:0 8px 40px rgba(0,0,0,0.85);display:inline-block;font-weight:600;transform-origin:left center;transform:scaleX(1.12);}
+        /* responsive rules removed: full-bleed-bar tagline sizing for smaller screens */
+
+        /* square stats card placed on the right side of the bar */
+    /* position the card properly within the bar boundaries */
+    .stats-square{position:absolute;right:28px;top:50%;transform:translateY(-50%);width:400px;height:280px;background:linear-gradient(180deg,#ffffff,#fbfbfb);padding:22px 26px;box-shadow: 0 20px 50px rgba(0,0,0,0.7);border-radius:12px;z-index:6;display:flex;align-items:center;justify-content:center;transition:transform .36s cubic-bezier(.2,.9,.2,1), box-shadow .36s;will-change:transform}
+    .stats-square-inner{position:relative;z-index:3;width:92%;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+        .stat-item{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:96px}
+        .stat-number{font-family:'HaettenschweilerLocal','Haettenschweiler','HelveticaCompressedLocal', Arial, sans-serif;font-size:72px;color:#111;line-height:0.9}
+        .stat-underline{width:60%;height:3px;background:#f0c22b;margin:10px 0;border-radius:2px}
+        .stat-label{font-family:Montserrat, Arial, sans-serif;font-size:0.95rem;color:#777;margin-top:6px}
+          /* dotted backdrop used previously for whole card is removed in favor
+              of per-item dotted squares for better grouping behind each stat */
+     .stats-square::before{content:'';position:absolute;inset:10px;border-radius:10px;pointer-events:none;z-index:1;opacity:0}
+
+     /* Place a dotted square behind each stat item. Each stat is positioned
+         relative so the pseudo-element sits inside its bounds. The content
+         (number/underline/label) is placed above the dots via z-index. */
+     .stat-item{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:96px;position:relative;overflow:hidden;padding:8px;border-radius:8px}
+    .stat-item::before{content:'';position:absolute;inset:6px;border-radius:10px;background-image:radial-gradient(rgba(0,0,0,0.32) 2.25px, transparent 2.25px);background-size:12px 12px;opacity:0.32;pointer-events:none;z-index:1;mix-blend-mode:multiply}
+     .stat-number,.stat-underline,.stat-label{position:relative;z-index:2}
+
+    /* responsive rules removed: stats-square adjustments for smaller screens */
+
+        /* gentle floating animation for the card (contained within bar) */
+        .stats-square{animation: floatCardContained 6.6s ease-in-out infinite}
+        @keyframes floatCardContained{
+            0%{ transform: translateY(-50%) translateX(0); }
+            25%{ transform: translateY(calc(-50% - 3px)) translateX(-1px); }
+            50%{ transform: translateY(calc(-50% - 6px)) translateX(0); }
+            75%{ transform: translateY(calc(-50% - 3px)) translateX(1px); }
+            100%{ transform: translateY(-50%) translateX(0); }
+        }
+    /* responsive rules removed: full-bleed-bar height adjustments for smaller screens */
+        
+    /* Services section styling (carousel-like horizontal track) */
+    /* services section constrained inside the white band */
+    .services-section{padding:48px 0 72px;background:#ffffff;position:relative;margin-top:0;z-index:1}
+    /* uncompress services title slightly to improve legibility */
+    .services-title{text-align:center;font-family:'HaettenschweilerLocal','Haettenschweiler','HelveticaCompressedLocal',Arial,sans-serif;font-size:2.4rem;margin:0 0 28px;color:#111;letter-spacing:1.6px;transform:scaleX(1.00);transform-origin:center}
+    .services-wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px;position:relative}
+    .services-track{display:flex;gap:22px;overflow:hidden;padding:12px 18px;width:100%;scroll-behavior:smooth;position:relative;z-index:3}
+    /* make the cards float on the page (no solid card background) */
+    .service-card{min-width:220px;height:200px;background:transparent;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 12px 24px rgba(0,0,0,0.08);position:relative;transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s, z-index .1s;overflow:hidden;pointer-events:auto;z-index:2}
+     /* fallback card background image delivered via an <img> so browsers load reliably
+         even when page is opened from file://. The element is hidden until the card
+         becomes active (opacity transition). */
+    .service-card .card-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:6px;z-index:0;opacity:0;transition:opacity .28s ease-in-out;pointer-events:none}
+     .service-card.active .card-bg{opacity:1}
+    .service-card .svc-icon{width:86px;height:86px;object-fit:contain;opacity:0.95;position:relative;z-index:4;pointer-events:auto}
+    .service-card .svc-name{font-family:Montserrat,Arial,sans-serif;font-size:1rem;color:#222;margin-top:18px;font-weight:600;position:relative;z-index:4;pointer-events:auto}
+    /* active (popped) card */
+    .service-card.active{transform:translateY(-12px) scale(1.04);box-shadow:0 36px 120px rgba(0,0,0,0.45);z-index:9}
+    .service-card.featured{min-width:260px;height:260px;background:linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.06));padding:0;border-radius:6px;overflow:hidden}
+    .service-card .featured-img{width:100%;height:100%;background-size:cover;background-position:center}
+    .service-card .featured-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+    .featured-badge{width:44px;height:44px;border-radius:50%;background:#fff;color:#222;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:8px}
+    .featured-title{font-family:HaettenschweilerLocal,Arial,sans-serif;font-size:1.1rem;font-weight:700}
+    /* professional circular arrow controls positioned outside the track */
+    .svc-arrow{
+        --size:64px;
+        width:var(--size);height:var(--size);display:flex;align-items:center;justify-content:center;border-radius:50%;
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        color:#102030;border:1px solid rgba(16,32,48,0.06);font-size:28px;cursor:pointer;
+        box-shadow: 0 10px 30px rgba(2,8,20,0.28), 0 4px 12px rgba(2,8,20,0.12);
+        transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+        position:absolute;top:50%;transform:translateY(-50%);z-index:10;backdrop-filter: blur(4px);
+    }
+    .svc-arrow.left{ left: calc(-0.5 * var(--size)); }
+    .svc-arrow.right{ right: calc(-0.5 * var(--size)); }
+    .svc-arrow:focus{ outline: 3px solid rgba(16,124,212,0.16); outline-offset:6px }
+    .svc-arrow:hover{ transform: translateY(-50%) scale(1.06); box-shadow: 0 18px 44px rgba(2,8,20,0.36); background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03)); }
+     /* when a card becomes active we show its real image as the background,
+         apply a dark gradient overlay and make icon + text white */
+     .service-card{background-repeat:no-repeat;background-size:cover;background-position:center}
+     .service-card .svc-icon,.service-card .svc-name{position:relative;z-index:3;transition:color .18s,filter .18s,opacity .18s}
+     .service-card::before{content:'';position:absolute;inset:0;border-radius:6px;pointer-events:none;z-index:1}
+     .service-card.active::before{background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6));z-index:2}
+     .service-card.active{color:#fff}
+     .service-card.active .svc-name{color:#fff}
+     .service-card.active .svc-icon{filter:brightness(0) invert(1);opacity:1}
+    /* responsive rules removed: service card sizing on smaller screens */
+
+    /* Footer styles matching provided screenshot */
+    .site-footer{position:relative;background:#0e1316;color:#d8d8d8;overflow:hidden;font-family:Montserrat,Arial,sans-serif}
+    .site-footer .footer-bg{position:absolute;inset:0;background-image:url('file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/pp.jpg');background-size:cover;background-position:center;opacity:0.18;filter:grayscale(20%);pointer-events:none;z-index:0}
+    .site-footer .footer-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:42px 26px}
+    .site-footer .footer-top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:18px;margin-bottom:18px}
+    .footer-brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{width:72px;height:36px;display:flex;align-items:center;justify-content:center}
+    .brand-mark img{width:100%;height:auto;display:block}
+    .brand-name{font-family:'KuroTrial Black', 'KuroTrial Heavy', Arial, sans-serif;font-weight:800;color:#fff;letter-spacing:1px;font-size:1.1rem}
+    .footer-nav a{color:rgba(255,255,255,0.72);text-decoration:none;margin-left:22px;font-size:0.95rem}
+    .footer-content{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;padding:18px 6px}
+    .site-footer h4{color:#fff;margin:6px 0 10px;font-size:0.95rem;letter-spacing:1px}
+    .site-footer p{color:rgba(255,255,255,0.72);margin:0;font-size:0.95rem;line-height:1.6}
+    .subscribe .subscribe-row{display:flex;gap:8px;margin-top:8px}
+    .subscribe input{flex:1;padding:10px 12px;border-radius:24px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff}
+    .send-btn{width:44px;height:44px;border-radius:50%;border:0;background:linear-gradient(180deg,#f3b21a,#d9970f);display:inline-flex;align-items:center;justify-content:center;color:#081218;cursor:pointer}
+    .socials{margin-top:14px;display:flex;gap:10px;align-items:center}
+    .socials a{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);color:#fff;text-decoration:none}
+    .socials img{width:18px;height:18px;object-fit:contain;filter:invert(1) brightness(2)}
+    .site-footer .footer-bottom{background:rgba(0,0,0,0.12);text-align:center;padding:14px 10px;color:rgba(255,255,255,0.55);font-size:0.95rem}
+    /* responsive rules removed: footer adjustments for smaller screens */
+    /* Project CTA / Survey styles */
+    .project-cta{display:flex;gap:0;max-width:1200px;margin:36px auto;padding:0 12px;align-items:stretch}
+    .survey-card{background:#fff;padding:28px;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,0.12);flex:0 0 520px}
+    .cta-panel{flex:1;background:#23282b;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;border-radius:6px;margin-left:18px;position:relative}
+    .cta-panel h2{max-width:420px;text-align:center}
+    .cta-arrow{position:absolute;right:22px;bottom:22px;width:44px;height:44px;border-radius:6px;background:#f3b21a;color:#081218;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .survey-send-btn{box-shadow:0 6px 14px rgba(0,0,0,0.12)}
+    /* responsive rules removed: project-cta stacking behavior on smaller screens */
+
+    /* ---------------------------
+       Responsive: mobile-first
+       --------------------------- */
+    /* Tablet / small laptop tweaks */
+    @media (max-width: 600px){
+        .center-logo{width:72px;height:72px}
+        .about-text{font-size:2.2rem;max-width:40ch}
+        .full-bleed-bar{height:240px}
+        /* keep no additional top gap at this size */
+        .white-band{margin-top:0;padding-top:0}
+        .stats-square{right:20px;width:340px;height:240px}
+        .service-card.featured{min-width:220px;height:220px}
+        /* ensure menu is fully visible: nudge further left and raise z-index */
+    .menu-control{top:14px;right:48px;z-index:40}
+    .hero-hamburger{top:14px;right:48px;z-index:40}
+    /* Main mobile breakpoint: narrow phones and portrait tablets */
+    @media (max-width: 480px){
+        /* Menu / hamburger adjustments */
+        .center-wrap{top:42%}
+    .menu-control{top:12px;right:48px;gap:8px}
+        .menu-control .menu-label{font-size:0.95rem}
+
+        /* keep menu visible and away from the edge */
+    .menu-control{right:48px;z-index:40}
+    .hero-hamburger{right:48px;z-index:40}
+        /* Hero / centered content */
+        .center-wrap{top:36%}
+        .center-logo{width:64px;height:64px}
+        .center-title{font-size:1rem}
+        .about-text{font-size:1.6rem;max-width:30ch;margin-top:8px}
+
+    /* White band and bar: no extra top gap at this size */
+    .white-band{margin-top:0;padding:0 12px 36px}
+        .full-bleed-bar{height:180px}
+        .full-bleed-bar .bar-tagline{font-size:2rem;margin-left:1vw}
+
+        /* Stats card becomes a full-width stacked block under the tagline */
+        .stats-square{position:static;right:auto;top:auto;transform:none;width:92%;height:auto;margin:12px auto;padding:14px;box-shadow:0 12px 30px rgba(0,0,0,0.12);border-radius:10px}
+        .stats-square-inner{grid-template-columns:repeat(2,1fr);gap:12px}
+        .stat-number{font-size:36px}
+        .stat-label{font-size:0.9rem}
+
+        /* Services: more compact, touch-friendly */
+        .services-section{padding:28px 8px 48px}
+        .services-wrap{max-width:100%;padding:0 8px}
+        .services-track{gap:12px;padding:8px}
+        .service-card{min-width:160px;height:160px;border-radius:8px}
+        .service-card .svc-icon{width:68px;height:68px}
+        .service-card .svc-name{font-size:0.95rem;margin-top:12px}
+        .service-card.active{transform:translateY(-8px) scale(1.03);box-shadow:0 18px 56px rgba(0,0,0,0.18)}
+
+        /* Arrow controls: smaller and positioned inside the track for touch */
+        .svc-arrow{--size:48px;width:var(--size);height:var(--size);font-size:22px}
+        .svc-arrow.left{left:8px}
+        .svc-arrow.right{right:8px}
+
+        /* Project CTA stacks vertically on mobile */
+        .project-cta{flex-direction:column;padding:0 12px}
+        .survey-card{flex:none;width:100%;margin:0 0 14px}
+        .cta-panel{margin-left:0;padding:28px;border-radius:6px}
+
+        /* Footer stacks to single column */
+        .site-footer .footer-inner{padding:28px 16px}
+        .footer-content{grid-template-columns:1fr;gap:12px}
+    }
+    
+    /* Small screens: match hero sizing and typography to Contact */
+    @media (max-width: 600px){
+        .hero{height:60vh}
+        .center-wrap{top:42%}
+        .center-logo{width:44px;height:44px}
+        .center-title{font-size:0.95rem}
+        /* About label styled like Contact label */
+        .about-text{font-family:Montserrat,Arial,sans-serif;font-weight:700;font-size:1.4rem;color:#fff;margin-top:8px;text-shadow:0 8px 20px rgba(0,0,0,0.46)}
+        /* Services cards: move titles to centered bottom and reduce size */
+        .service-card{position:relative;padding-bottom:28px}
+        .service-card .svc-name{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;margin-top:0;text-align:center;width:88%;font-size:0.9rem}
+    /* match Contact placement; ensure fully visible (safe areas + z-index) */
+    .menu-control{top:16px;right:48px;z-index:40}
+    .menu-control{top:calc(16px + env(safe-area-inset-top, 0px));right:calc(48px + env(safe-area-inset-right, 0px))}
+    .hero-hamburger{top:16px;right:48px;z-index:40}
+    .hero-hamburger{top:calc(16px + env(safe-area-inset-top, 0px));right:calc(48px + env(safe-area-inset-right, 0px))}
+        .hamburger{width:36px;height:36px}
+        .bar{width:30px;height:3px}
+        .menu-control .menu-label{display:inline-block}
+    }
+
+    /* Very small phones */
+    @media (max-width: 480px){
+        .center-wrap{top:42%}
+        .center-logo{width:40px;height:40px}
+        .about-text{font-size:1.2rem;max-width:22ch;font-weight:700}
+        .center-title{font-size:0.9rem}
+        .hero-left-title{font-size:1.8rem;padding-left:4vw}
+        .full-bleed-bar{height:140px}
+        .stats-square-inner{grid-template-columns:1fr 1fr}
+        .stat-number{font-size:28px}
+        .service-card{min-width:140px;height:140px}
+        .service-card .svc-name{font-size:0.85rem;bottom:8px}
+        .svc-arrow{--size:44px}
+    /* keep the 'Menu' text visible and ensure it's fully inside on tiny phones */
+    .menu-control{right:48px;top:16px;z-index:40}
+    .menu-control{right:calc(48px + env(safe-area-inset-right, 0px));top:calc(16px + env(safe-area-inset-top, 0px))}
+    .hero-hamburger{right:48px;top:16px;z-index:40}
+    .hero-hamburger{right:calc(48px + env(safe-area-inset-right, 0px));top:calc(16px + env(safe-area-inset-top, 0px))}
+    .menu-control .menu-label{display:inline-block}
+        /* Push the stats card even further down on very small screens */
+        .white-band{padding-top:160px}
+        /* move only the card further down visually, without shifting layout */
+        .stats-square-mobile{top:60px}
+        /* footer link row tightening for smallest phones */
+        .site-footer .footer-nav{gap:10px}
+        .site-footer .footer-nav a{font-size:0.86rem}
+    }
+
+    /* Small screens: make the glassmorphic sidebar content compact (match Contact/Portfolio feel) */
+    @media (max-width: 600px){
+    /* Match Portfolio: keep default width and only tighten spacing */
+    .glass-menu{gap:18px}
+        .glass-menu a{font-size:1.08rem;padding:8px 0}
+        .social-icons{gap:16px;bottom:18px}
+        .social-icon{width:36px;height:36px}
+    /* match Contact/Team sizing; ensure full visibility with safe areas */
+    .menu-control{top:16px;right:48px;z-index:40}
+    .menu-control{top:calc(16px + env(safe-area-inset-top, 0px));right:calc(48px + env(safe-area-inset-right, 0px))}
+    .hero-hamburger{top:16px;right:48px;z-index:40}
+    .hero-hamburger{top:calc(16px + env(safe-area-inset-top, 0px));right:calc(48px + env(safe-area-inset-right, 0px))}
+        .hamburger{width:36px;height:36px}
+        .bar{width:30px;height:3px}
+        /* Add more white space under the hero so the stats card sits lower */
+    .white-band{margin-top:0;padding-top:130px}
+        /* show the mobile stats card and hide the one inside the band */
+        .stats-square-mobile{display:block}
+        .white-band .full-bleed-bar .stats-square{display:none}
+    .stats-square-mobile{width:92%;height:360px;margin:0 auto 20px;box-shadow:0 12px 30px rgba(0,0,0,0.12);border-radius:10px;position:relative;top:110px;display:flex;align-items:flex-start;justify-content:center;padding:10px 8px}
+    /* Arrange as a single column list: number, label, then underline */
+    .stats-square-mobile .stats-square-inner{width:94%;height:auto;display:grid;grid-template-columns:1fr;gap:18px;align-content:start;justify-items:stretch}
+    .stats-square-mobile .stat-item{min-height:auto;padding:6px 2px;align-items:flex-start;text-align:left;width:100%;display:flex;flex-direction:column}
+    /* reorder so the underline comes after the label (without changing HTML) */
+    .stats-square-mobile .stat-number{order:1;font-size:52px;line-height:0.9}
+    .stats-square-mobile .stat-label{order:2;font-size:0.98rem;margin-top:6px}
+    .stats-square-mobile .stat-underline{order:3;width:88%;height:3px;background:#f0c22b;margin:6px 0 0;border-radius:2px}
+    .stats-square-mobile .stat-number{font-size:44px}
+    .stats-square-mobile .stat-label{font-size:0.98rem}
+        /* Footer (≤600px): logo on the first row; links on a single line below it */
+    .site-footer .footer-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+        .site-footer .footer-brand{flex:0 0 100%}
+    /* single-line nav exactly like the screenshot: left-aligned, compact, no wrap */
+    .site-footer .footer-nav{flex:0 0 100%;display:flex;flex-wrap:nowrap;align-items:center;gap:12px;margin-left:0;margin-top:8px;padding:8px 0;justify-content:flex-start;white-space:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .site-footer .footer-nav a{margin:0;font-size:0.9rem}
+    }
+
+    /* Extra mobile tuning: slightly taller and lower on very small phones */
+    @media (max-width: 480px){
+    .stats-square-mobile{height:400px;top:140px}
+    .stats-square-mobile .stats-square-inner{gap:14px}
+    .stats-square-mobile .stat-number{font-size:48px}
+    .stats-square-mobile .stat-underline{width:90%}
+    }
+
+    /* Very small screens: slide in a wider overlay like Contact */
+    @media (max-width: 420px){
+        .glass-overlay{width:90vw;right:-90vw}
+        .glass-overlay.active{right:0}
+        /* slightly shorter hero on the tiniest phones */
+        .hero{height:54vh}
+    }
+
+    /* Desktop/wide screens: ensure the hero-adjacent mobile duplicate never shows */
+    @media (min-width: 769px){
+        .stats-square-mobile{display:none !important}
+        /* In case any stats card is placed in the hero, hide it on wide screens too */
+        .hero .stats-square{display:none !important}
+        /* Keep the bar contained so it doesn't overlap the hero */
+        .white-band .full-bleed-bar{overflow:hidden !important}
+        /* Show the bar stats card on wide screens */
+        .white-band .full-bleed-bar .stats-square{display:flex !important}
+    }
+
+    </style>
+</head>
+<body>
+    <div class="hero">
+    <div class="slideshow-bg">
+    <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/h.jpg" alt="about-bg" class="slide-img" loading="eager">
+    </div>
+
+    <!-- dark overlay above background image to improve contrast (hero only) -->
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.42);z-index:1;pointer-events:none;"></div>
+
+
+
+    <div class="center-wrap">
+        <span class="center-logo anim-item" id="centerLogo">
+            <img src="D:/MY documents/MY PROJECTS/ARCHITECTURE/logo.png.png" alt="Logo">
+        </span>
+        <span class="center-title anim-item">ARCHISTAGE CONSULT</span>
+        <span class="about-text">about us</span>
+    </div>
+
+    <!-- put hamburger and label back on hero (white bars and text) -->
+    <div class="menu-control hero-hamburger">
+    <span class="menu-label">Menu</span>
+        <div class="hamburger" id="hamburgerMenu" title="Menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+
+
+    </div>
+
+    <div class="glass-overlay" id="glassOverlay">
+    <!-- Removed 'Welcome to Our Website' heading as requested -->
+        <nav class="glass-menu">
+            <a href="index.html">Home</a>
+            <a href="About Us.html">About Us</a>
+            <a href="Portfolio.html">Portfolio</a>
+            <a href="Team.html">The Team</a>
+            <a href="Contact.html">Contact</a>
+        </nav>
+        <div class="social-icons">
+            <a class="social-icon" href="https://facebook.com" target="_blank" title="Facebook"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/facebook.png" alt="fb" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="https://instagram.com" target="_blank" title="Instagram"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/instagram.png" alt="ig" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="https://linkedin.com" target="_blank" title="LinkedIn"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/linkedin.png" alt="li" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="mailto:archistageconsult@gmail.com" title="Email"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/email.png" alt="email" style="width:22px;height:22px;object-fit:contain"></a>
+        </div>
+    </div>
+
+    <!-- White band: separates hero from the content sections -->
+    <div class="white-band">
+        <!-- Mobile-first stats card placed immediately after the hero (shown only ≤600px) -->
+        <div class="stats-square stats-square-mobile" role="region" aria-label="Key statistics (mobile)">
+            <div class="stats-square-inner">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="7">7</div>
+                    <div class="stat-underline"></div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="100">100</div>
+                    <div class="stat-underline"></div>
+                    <div class="stat-label">Finished Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="269">269</div>
+                    <div class="stat-underline"></div>
+                    <div class="stat-label">Working Hours</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="500">500</div>
+                    <div class="stat-underline"></div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-control band-menu">
+                
+            </div>
+        <!-- Section title under hero (left-aligned, condensed Helvetica) -->
+        <div style="background:#ffffff; padding-top: 6px;">
+            <h2 class="hero-left-title">WE ARE PROFESSIONAL AND UNIQUE</h2>
+        </div>
+
+        <!-- full-width rectangular bar under the headline (constrained inside the white band) -->
+        <div class="full-bleed-bar" role="region" aria-label="Decorative band">
+            <div class="bar-inner">
+                <div class="bar-tagline">WE HAVE VARIETY OF EXPERIENCE</div>
+
+                <!-- square stats card on the right side of the bar -->
+                <div class="stats-square" role="region" aria-label="Key statistics">
+                    <div class="stats-square-inner">
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="7">7</div>
+                            <div class="stat-underline"></div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="100">100</div>
+                            <div class="stat-underline"></div>
+                            <div class="stat-label">Finished Projects</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="269">269</div>
+                            <div class="stat-underline"></div>
+                            <div class="stat-label">Working Hours</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="500">500</div>
+                            <div class="stat-underline"></div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services carousel / grid — placed directly below the bar -->
+        <section class="services-section" aria-label="What we do">
+            <h2 class="services-title">WHAT WE DO</h2>
+            <div class="services-wrap">
+                <button class="svc-arrow left" aria-label="Scroll left">‹</button>
+                <div class="services-track" id="servicesTrack">
+                <div class="service-card" data-image="assets/images/construction-engineer.jpg">
+                    <img class="card-bg" src="assets/images/construction-engineer.jpg" alt="Construction background">
+                    <img class="svc-icon" src="https://img.icons8.com/ios/80/000000/architect.png" alt="Construction Consultancy">
+                    <div class="svc-name">Construction Consultancy</div>
+                </div>
+                <div class="service-card" data-image="assets/images/residential-houses.jpg">
+                    <img class="card-bg" src="assets/images/residential-houses.jpg" alt="Residential background">
+                    <img class="svc-icon" src="https://img.icons8.com/ios/80/000000/blueprint.png" alt="Residential Design">
+                    <div class="svc-name">Residential Design</div>
+                </div>
+                <div class="service-card" data-image="https://images.unsplash.com/photo-1495433324511-bf8e92934d90?q=80&w=1600&auto=format&fit=crop">
+                    <img class="card-bg" src="https://images.unsplash.com/photo-1495433324511-bf8e92934d90?q=80&w=1600&auto=format&fit=crop" alt="Structural background">
+                    <img class="svc-icon" src="https://img.icons8.com/ios/80/000000/bridge.png" alt="Structural Design">
+                    <div class="svc-name">Structural Design</div>
+                </div>
+                <div class="service-card" data-image="assets/images/interior-renovation.jpg">
+                    <img class="card-bg" src="assets/images/interior-renovation.jpg" alt="Interior background">
+                    <img class="svc-icon" src="https://img.icons8.com/ios/80/000000/interior-design.png" alt="Interior Renovation">
+                    <div class="svc-name">Interior Renovation</div>
+                </div>
+                <div class="service-card" data-image="https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=1600&auto=format&fit=crop">
+                    <img class="card-bg" src="https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=1600&auto=format&fit=crop" alt="Landscape background">
+                    <img class="svc-icon" src="https://img.icons8.com/ios/80/000000/deciduous-tree.png" alt="Landscape Architecture">
+                    <div class="svc-name">Landscape Architecture</div>
+                </div>
+                <div class="service-card" data-image="https://images.unsplash.com/photo-1509395176047-4a66953fd231?q=80&w=1600&auto=format&fit=crop">
+                    <img class="card-bg" src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?q=80&w=1600&auto=format&fit=crop" alt="Management background">
+                    <img class="svc-icon" src="https://img.icons8.com/ios/80/000000/task.png" alt="Project Management">
+                    <div class="svc-name">Project Management</div>
+                </div>
+                <div class="service-card" data-image="https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop">
+                    <img class="card-bg" src="https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop" alt="MEP background">
+                    <img class="svc-icon" src="https://img.icons8.com/ios/80/000000/gear.png" alt="MEP Coordination">
+                    <div class="svc-name">MEP Coordination</div>
+                </div>
+                <div class="service-card" data-image="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1600&auto=format&fit=crop">
+                    <img class="card-bg" src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1600&auto=format&fit=crop" alt="Urban background">
+                    <img class="svc-icon" src="https://img.icons8.com/ios/80/000000/city.png" alt="Urban Planning">
+                    <div class="svc-name">Urban Planning</div>
+                </div>
+                
+            </div>
+            <button class="svc-arrow right" aria-label="Scroll right">›</button>
+        </div>
+    </section>
+
+    <!-- Project CTA / Survey Section (left: form card, right: dark CTA) -->
+    <section class="project-cta" aria-label="Start your project">
+        <div class="survey-card">
+            <h3 id="surveyTitle" style="text-align:center;font-family:'HaettenschweilerLocal',Arial, sans-serif;font-size:2.4rem;margin-top:6px;letter-spacing:1px">SURVEY FORM</h3>
+            <form id="surveyForm" style="margin-top:18px">
+                <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start">
+                    <label style="display:block"><input name="fullname" placeholder="Full Name" required style="width:100%;border:0;border-bottom:1px solid #ddd;padding:10px 6px;background:transparent"></label>
+                    <label style="display:block"><input name="phone" placeholder="Phone Number" required style="width:100%;border:0;border-bottom:1px solid #ddd;padding:10px 6px;background:transparent"></label>
+                </div>
+                <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px">
+                    <label style="display:block"><input name="email" type="email" placeholder="Email" required style="width:100%;border:0;border-bottom:1px solid #ddd;padding:10px 6px;background:transparent"></label>
+                    <label style="display:block"><input name="service" placeholder="Service" style="width:100%;border:0;border-bottom:1px solid #ddd;padding:10px 6px;background:transparent"></label>
+                </div>
+                <div style="margin-top:16px">
+                    <label style="display:block"><textarea name="message" placeholder="Message" rows="4" style="width:100%;border:0;border-bottom:1px solid #ddd;padding:10px 6px;background:transparent"></textarea></label>
+                </div>
+                <div style="margin-top:22px;text-align:center">
+                    <button type="submit" id="surveySend" class="survey-send-btn" style="background:#f3b21a;border:0;padding:12px 44px;border-radius:4px;color:#081218;font-weight:700;cursor:pointer">Send</button>
+                </div>
+            </form>
+        </div>
+        <div class="cta-panel">
+            <h2 id="ctaTitle" style="font-family:'HaettenschweilerLocal',Arial,sans-serif;font-size:2.6rem;letter-spacing:1px;text-transform:uppercase">START YOUR PROJECT NOW</h2>
+            <div class="cta-arrow" aria-hidden="true">˄</div>
+        </div>
+    </section>
+
+    <!-- spacer removed to place footer directly after the project CTA -->
+
+    <!-- Footer (matching provided screenshot) -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-bg" aria-hidden="true"></div>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a class="brand-mark" href="index.html" title="Home"><img src="D:/MY documents/MY PROJECTS/ARCHITECTURE/white logo.png" alt="ARCHISTAGE logo"></a>
+                    <div class="brand-name">ARCHISTAGE CONSULT</div>
+                </div>
+                <div class="footer-nav">
+                    <a href="index.html">Home</a>
+                    <a href="About Us.html">About Us</a>
+                    <a href="Portfolio.html">Portfolio</a>
+                    <a href="Team.html">The Team</a>
+                    <a href="Contact.html">Contact</a>
+                </div>
+            </div>
+
+            <div class="footer-content">
+                <div class="col location">
+                    <h4>OUR LOCATION</h4>
+                    <p>Mianzini, Arusha</p>
+                </div>
+                <div class="col phone">
+                    <h4>OUR PHONE NUMBER</h4>
+                    <p>+255 756 660 232</p>
+                </div>
+                <div class="col mail">
+                    <h4>OUR CONTACT MAIL</h4>
+                    <p style="display:flex;flex-direction:column;gap:6px">
+                        <span>archistageconsult@gmail.com</span>
+                    </p>
+                </div>
+                <div class="col subscribe">
+                    <h4>SUBSCRIBE</h4>
+                    <p>Your email address</p>
+                    <div class="subscribe-row">
+                        <input id="footerSubscribeEmail" type="email" placeholder="Your email address" aria-label="Your email address">
+                        <a class="send-btn" id="footerSendBtn" href="mailto:archistageconsult@gmail.com" aria-label="Subscribe">✈</a>
+                    </div>
+                    <div class="socials">
+                        <a href="https://facebook.com" aria-label="facebook" target="_blank"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/facebook.png" alt="fb"></a>
+                        <a href="https://instagram.com" aria-label="instagram" target="_blank"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/instagram.png" alt="ig"></a>
+                        <a href="https://linkedin.com" aria-label="linkedin" target="_blank"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/linkedin.png" alt="li"></a>
+                        <a href="mailto:archistageconsult@gmail.com" aria-label="email"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/email.png" alt="email"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">Copyright © 2025 - archstage consult</div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger toggle and outside-click close (same behavior as index.html)
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const glassOverlay = document.getElementById('glassOverlay');
+        hamburgerMenu.addEventListener('click', (e) => {
+            glassOverlay.classList.toggle('active');
+            e.stopPropagation();
+        });
+        document.addEventListener('click', (e) => {
+            if (glassOverlay.classList.contains('active')){
+                if (!glassOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)){
+                    glassOverlay.classList.remove('active');
+                }
+            }
+        });
+        glassOverlay.addEventListener('click', (e) => e.stopPropagation());
+    </script>
+    <script>
+        // Toggle dark-menu when the menu control sits over a light background.
+        (function(){
+            const body = document.body;
+            const menuControl = document.querySelector('.menu-control');
+            if (!menuControl) return;
+
+            // compute brightness from rgb values (0-255)
+            function rgbBrightness(r,g,b){ return (r*299 + g*587 + b*114) / 1000; }
+
+            // find the effective background color by walking up the DOM
+            function getEffectiveBgColor(el){
+                while(el && el !== document.documentElement){
+                    const cs = getComputedStyle(el);
+                    const bg = cs.backgroundColor;
+                    if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') return bg;
+                    el = el.parentElement;
+                }
+                return window.getComputedStyle(document.documentElement).backgroundColor || 'rgb(255,255,255)';
+            }
+
+            function parseRgb(str){
+                const m = str.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+                if (!m) return [255,255,255];
+                return [parseInt(m[1],10), parseInt(m[2],10), parseInt(m[3],10)];
+            }
+
+            function check(){
+                // pick a point roughly at the center of the menuControl
+                const rect = menuControl.getBoundingClientRect();
+                const x = Math.min(window.innerWidth-1, Math.max(1, Math.floor(rect.left + rect.width/2)));
+                const y = Math.min(window.innerHeight-1, Math.max(1, Math.floor(rect.top + rect.height/2)));
+                const elAt = document.elementFromPoint(x,y);
+                if (!elAt){ body.classList.remove('dark-menu'); return; }
+                // find an ancestor with a solid background
+                const bgEl = elAt.closest && elAt.closest('*') || elAt;
+                const bgColor = getEffectiveBgColor(bgEl);
+                const [r,g,b] = parseRgb(bgColor);
+                const bright = rgbBrightness(r,g,b);
+                // threshold: if brightness > 200 treat as light background
+                if (bright > 200) body.classList.add('dark-menu'); else body.classList.remove('dark-menu');
+            }
+
+            // run on scroll, resize, and orientation change; also run initially
+            window.addEventListener('scroll', check, { passive: true });
+            window.addEventListener('resize', check);
+            window.addEventListener('orientationchange', check);
+            setTimeout(check, 80);
+        })();
+    </script>
+    <script>
+        // Improve horizontal dragging/throw for services track on touch devices
+        (function(){
+            const track = document.getElementById('servicesTrack');
+            if (!track) return;
+            let isDown = false, startX = 0, scrollLeft = 0;
+            track.addEventListener('pointerdown', (e)=>{
+                isDown = true; track.setPointerCapture(e.pointerId);
+                startX = e.clientX; scrollLeft = track.scrollLeft;
+            });
+            track.addEventListener('pointermove', (e)=>{
+                if (!isDown) return;
+                const dx = e.clientX - startX; track.scrollLeft = scrollLeft - dx;
+            });
+            ['pointerup','pointercancel','pointerleave'].forEach(evt=> track.addEventListener(evt, ()=>{ isDown = false; }));
+        })();
+    </script>
+    <script>
+        // Count-up animation for stats; supports multiple containers (desktop + mobile)
+        (function(){
+            function animateNumber(el, target, duration=1100){
+                const start = 0;
+                const end = parseInt(target,10) || 0;
+                const range = end - start;
+                let startTime = null;
+                function step(timestamp){
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    const val = Math.floor(progress * range + start);
+                    el.textContent = val + (progress === 1 ? '+' : '');
+                    if (progress < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            }
+
+            function runForContainer(container){
+                const visible = window.getComputedStyle(container).display !== 'none' && container.offsetParent !== null;
+                if (!visible) return;
+                const nums = Array.from(container.querySelectorAll('.stat-number'));
+                nums.forEach((el, i)=>{
+                    const t = el.getAttribute('data-target') || el.textContent;
+                    setTimeout(()=> animateNumber(el, t, 1000 + i*160), i*120);
+                });
+            }
+
+            const containers = Array.from(document.querySelectorAll('.stats-square'));
+            if ('IntersectionObserver' in window && containers.length){
+                const obs = new IntersectionObserver((entries)=>{
+                    entries.forEach(e=>{
+                        if (e.isIntersecting){
+                            runForContainer(e.target);
+                            obs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.3 });
+                containers.forEach(c=> obs.observe(c));
+            } else {
+                // fallback: run once on load for any visible container
+                window.addEventListener('load', ()=> containers.forEach(runForContainer));
+                setTimeout(()=> containers.forEach(runForContainer), 800);
+            }
+        })();
+    </script>
+    <script>
+    // Wide-screen hard hide: ensure only HERO/mobile stats are hidden at ≥769px (bar stays visible)
+        (function(){
+            const mq = window.matchMedia('(min-width: 769px)');
+            function apply(){
+                const targets = Array.from(document.querySelectorAll('.hero .stats-square, .stats-square-mobile'));
+                if (mq.matches){
+                    targets.forEach(el=> {
+                        el.style.setProperty('display','none','important');
+                        el.setAttribute('aria-hidden','true');
+                    });
+                    // explicitly ensure the bar card is shown on wide screens
+                    const barCards = document.querySelectorAll('.white-band .full-bleed-bar .stats-square');
+                    barCards.forEach(el=> el.style.setProperty('display', 'flex', 'important'));
+                } else {
+                    targets.forEach(el=> {
+                        el.style.removeProperty('display');
+                        el.removeAttribute('aria-hidden');
+                    });
+                    // remove explicit inline display from bar cards; CSS handles the rest
+                    const barCards = document.querySelectorAll('.white-band .full-bleed-bar .stats-square');
+                    barCards.forEach(el=> el.style.removeProperty('display'));
+                }
+            }
+            apply();
+            if (mq.addEventListener) mq.addEventListener('change', apply); else mq.addListener(apply);
+            window.addEventListener('resize', apply);
+        })();
+    </script>
+    <script>
+        // Survey form -> open mail client with filled message
+        (function(){
+            const form = document.getElementById('surveyForm');
+            if (!form) return;
+            form.addEventListener('submit', function(e){
+                e.preventDefault();
+                const data = new FormData(form);
+                const fullname = (data.get('fullname') || '').toString().trim();
+                const phone = (data.get('phone') || '').toString().trim();
+                const email = (data.get('email') || '').toString().trim();
+                const service = (data.get('service') || '').toString().trim();
+                const message = (data.get('message') || '').toString().trim();
+                if (!fullname || !phone || !email){
+                    alert('Please fill your name, phone and email before sending.');
+                    return;
+                }
+                const to = 'archistageconsult@gmail.com';
+                const subject = encodeURIComponent(`New project inquiry from ${fullname}`);
+                const bodyLines = [];
+                bodyLines.push(`Name: ${fullname}`);
+                bodyLines.push(`Phone: ${phone}`);
+                bodyLines.push(`Email: ${email}`);
+                if (service) bodyLines.push(`Service: ${service}`);
+                if (message) bodyLines.push('Message:');
+                if (message) bodyLines.push(message);
+                const body = encodeURIComponent(bodyLines.join('\n'));
+                const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
+                console.debug('Opening mailto:', mailto);
+                // Try to open default mail client
+                window.location.href = mailto;
+                // Optionally, after 1s show a tiny confirmation if the user stayed on the page
+                setTimeout(()=>{ alert('If your mail client did not open, please send an email to ' + to); }, 1200);
+            });
+        })();
+    </script>
+    <script>
+        // Footer flight/send button: attach email input if provided
+        (function(){
+            const footerBtn = document.getElementById('footerSendBtn');
+            const footerInput = document.getElementById('footerSubscribeEmail');
+            if (!footerBtn) return;
+            footerBtn.addEventListener('click', function(e){
+                const val = footerInput && footerInput.value ? footerInput.value.trim() : '';
+                let subject = encodeURIComponent('Subscription / Contact');
+                let body = '';
+                if (val) body = encodeURIComponent('Subscriber email: ' + val + '\n');
+                const to = 'archistageconsult@gmail.com';
+                const href = `mailto:${to}?subject=${subject}&body=${body}`;
+                // update href then allow default navigation
+                footerBtn.href = href;
+            });
+        })();
+    </script>
+    <script>
+        // Services carousel: move one card at a time with wrap-around and center the active card
+        (function(){
+            const track = document.getElementById('servicesTrack');
+            const left = document.querySelector('.svc-arrow.left');
+            const right = document.querySelector('.svc-arrow.right');
+            if (!track) return;
+
+            const cards = Array.from(track.querySelectorAll('.service-card'));
+            if (!cards.length) return;
+
+            // Preload online service images so they appear immediately when activated
+            cards.forEach(c => {
+                const url = c.getAttribute('data-image');
+                if (url){ const img = new Image(); img.src = url; }
+            });
+
+            // helper to center a card with clamped scroll and a JS fallback for browsers
+            // that sometimes ignore smooth scroll target at the edges
+            function centerCard(card, behavior = 'smooth'){
+                const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+                const target = Math.min(maxScroll, Math.max(0, card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2));
+                try{
+                    track.scrollTo({ left: target, behavior });
+                }catch(e){
+                    // older browsers may throw; fallback to direct assignment
+                    track.scrollLeft = target;
+                }
+                // also write the scrollLeft after a short delay to ensure the browser applied it
+                setTimeout(()=>{ if (Math.abs(track.scrollLeft - target) > 2) track.scrollLeft = target; }, 420);
+            }
+
+            let debounceTimeout = null;
+            let currentIndex = 0;
+            // short lock to prevent the scroll debounce from fighting a programmatic
+            // center triggered by a click/arrow. While locked, setActiveCentered() is
+            // ignored. This avoids rapid flickering between adjacent cards.
+            let lockUntil = 0;
+
+            function findCenteredIndex(){
+                const center = track.scrollLeft + track.clientWidth / 2;
+                let closest = 0;
+                let closestDist = Infinity;
+                cards.forEach((c, i) => {
+                    const cardCenter = c.offsetLeft + c.offsetWidth / 2;
+                    const d = Math.abs(cardCenter - center);
+                    if (d < closestDist){ closestDist = d; closest = i; }
+                });
+                return closest;
+            }
+
+            function applyBackgroundForIndex(idx){
+                // remove inline backgrounds from all cards, then set for the active one
+                cards.forEach((c, i)=>{
+                    c.style.backgroundImage = '';
+                    c.style.backgroundColor = '';
+                    // hide other card-bg images via opacity (don't clear src to avoid alt-text flicker)
+                    const bg = c.querySelector('.card-bg'); if (bg) bg.style.opacity = '0';
+                });
+                const card = cards[idx];
+                const url = card.getAttribute('data-image');
+                const bg = card.querySelector('.card-bg');
+                if (url) {
+                    // set both inline background and the <img> src for reliability
+                    card.style.backgroundImage = `url('${url}')`;
+                    card.style.backgroundSize = 'cover';
+                    card.style.backgroundPosition = 'center';
+                    if (bg) {
+                        // only set src if not already set, so the browser can cache it
+                        if (!bg.src || !bg.src.includes(url)) bg.src = url;
+                        bg.style.opacity = '1';
+                    }
+                } else {
+                    // fallback transparent so the card floats on the page
+                    card.style.backgroundColor = 'transparent';
+                }
+            }
+
+            function setActiveByIndex(idx){
+                // Do not wrap around — if out of bounds, ignore the request
+                if (idx < 0 || idx >= cards.length) return;
+                const card = cards[idx];
+                // Immediately apply background and active class so the image shows during the pop
+                cards.forEach(c=>c.classList.remove('active'));
+                applyBackgroundForIndex(idx);
+                card.classList.add('active');
+                currentIndex = idx;
+
+                // then center the card (with robust fallback). While we are centering
+                // programmatically, ignore the scroll-based centering for a short time
+                // so the index doesn't jump back-and-forth.
+                lockUntil = Date.now() + 650;
+                console.debug('setActiveByIndex lock', idx, lockUntil);
+                centerCard(card, 'smooth');
+                // ensure we re-evaluate centered state after motion finishes
+                setTimeout(()=>{
+                    // give a final nudge to ensure the centered card remains active
+                    applyBackgroundForIndex(idx);
+                    cards.forEach(c=>c.classList.remove('active'));
+                    card.classList.add('active');
+                    currentIndex = idx;
+                    lockUntil = 0;
+                }, 740);
+            }
+
+            function setActiveCentered(){
+                const idx = findCenteredIndex();
+                cards.forEach(c=>c.classList.remove('active'));
+                applyBackgroundForIndex(idx);
+                cards[idx].classList.add('active');
+                currentIndex = idx;
+                // ensure perfectly centered (clamped) with the same helper
+                centerCard(cards[idx], 'smooth');
+            }
+
+            left && left.addEventListener('click', ()=>{
+                const prev = currentIndex - 1;
+                // stop at the first card
+                if (prev < 0) return;
+                setActiveByIndex(prev);
+            });
+
+            right && right.addEventListener('click', ()=>{
+                const next = currentIndex + 1;
+                // stop at the last card
+                if (next >= cards.length) return;
+                setActiveByIndex(next);
+            });
+
+            // allow clicking a card to activate & center it
+            cards.forEach((c,i)=>{
+                c.style.cursor = 'pointer';
+                c.addEventListener('click', (e)=>{
+                    // if clicking an already-active card do nothing
+                    if (currentIndex === i) return;
+                    console.debug('card click', i, c.querySelector('.svc-name')?.textContent || '');
+                    setActiveByIndex(i);
+                });
+
+                // defensive binding: if inner elements receive the pointer, also activate
+                const icon = c.querySelector('.svc-icon');
+                const name = c.querySelector('.svc-name');
+                [icon, name].forEach(el => {
+                    if (!el) return;
+                    // ensure they pass the click to the card handler
+                    el.style.cursor = 'pointer';
+                    el.addEventListener('click', (ev)=>{
+                        ev.stopPropagation();
+                        if (currentIndex === i) return;
+                        console.debug('inner click', i, el.className, c.querySelector('.svc-name')?.textContent || '');
+                        setActiveByIndex(i);
+                    });
+                });
+            });
+
+            track.addEventListener('scroll', ()=>{
+                // if we're locked from a programmatic center, skip scheduling.
+                if (Date.now() < lockUntil) return;
+                if (debounceTimeout) clearTimeout(debounceTimeout);
+                debounceTimeout = setTimeout(setActiveCentered, 120);
+            });
+
+            // Delegated click: as a robust fallback in case inner elements swallow events
+            // this ensures any click inside the track that bubbles up to the track will
+            // activate the correct card.
+            track.addEventListener('click', (e)=>{
+                const cardEl = e.target.closest && e.target.closest('.service-card');
+                if (!cardEl) return;
+                const idx = cards.indexOf(cardEl);
+                if (idx < 0) return;
+                if (currentIndex === idx) return;
+                console.debug('delegated track click', idx, cardEl.querySelector('.svc-name')?.textContent || '');
+                setActiveByIndex(idx);
+            });
+
+            // initialize to centered card after a short delay so images/layout can settle
+            setTimeout(()=>{
+                // ensure images have had a moment to load/layout
+                setActiveCentered();
+            }, 220);
+            window.addEventListener('resize', ()=> setTimeout(setActiveCentered, 140));
+        })();
+    </script>
+    <script>
+        // clicking centered logo -> go to home
+        (function(){
+            const centerLogo = document.getElementById('centerLogo');
+            if (centerLogo) {
+                centerLogo.addEventListener('click', function(e){
+                    if (e && (e.metaKey || e.ctrlKey || e.shiftKey)) return;
+                    window.location.href = 'index.html';
+                });
+            }
+        })();
+    </script>
+
+    
+    <script>
+        // One-time entrance: animate logo + title from bottom; keep about-text static
+        (function(){
+            const logo = document.querySelector('.center-logo');
+            const title = document.querySelector('.center-title');
+            const about = document.querySelector('.about-text');
+            if (!logo || !title) return;
+
+            // Make sure about-text is visible and not part of the anim-items
+            if (about) about.style.opacity = '1';
+
+            // Start with logo/title hidden (below). We'll add .visible to animate them in.
+            logo.classList.remove('visible');
+            title.classList.remove('visible');
+
+            // small delay so the page paints before animating
+            setTimeout(() => {
+                logo.classList.add('visible');
+                title.classList.add('visible');
+            }, 160);
+        })();
+    </script>
+        <script>
+            // After the logo/title entrance finishes, enable a subtle pointer-driven floating effect for the about text
+            (function(){
+                const title = document.querySelector('.center-title');
+                const about = document.querySelector('.about-text');
+                const container = document.querySelector('.center-wrap');
+                if (!title || !about || !container) return;
+
+                // helper to apply transform smoothly using rAF
+                let raf = null;
+                let lastX = 0, lastY = 0;
+
+                function applyTransform(x, y){
+                    // x,y are -1..1 relative pointer positions inside container
+                    // small translate + gentle rotate for depth effect
+                    const tx = x * 8; // px
+                    const ty = y * 6;
+                    const r = x * 2; // deg
+                    about.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${r}deg)`;
+                    about.style.filter = `drop-shadow(0 ${6 + Math.abs(y*4)}px ${16 + Math.abs(y*6)}px rgba(0,0,0,0.55))`;
+                }
+
+                function pointerMoveHandler(ev){
+                    const rect = container.getBoundingClientRect();
+                    const px = (ev.clientX - rect.left) / rect.width; // 0..1
+                    const py = (ev.clientY - rect.top) / rect.height; // 0..1
+                    // remap to -1..1
+                    const nx = (px - 0.5) * 2;
+                    const ny = (py - 0.5) * 2 * -1; // invert so moving up results in negative y
+                    lastX = nx;
+                    lastY = ny;
+                    if (raf) cancelAnimationFrame(raf);
+                    raf = requestAnimationFrame(()=> applyTransform(lastX, lastY));
+                }
+
+                function pointerLeaveHandler(){
+                    if (raf) cancelAnimationFrame(raf);
+                    raf = requestAnimationFrame(()=>{
+                        about.style.transform = '';
+                        about.style.filter = '';
+                    });
+                }
+
+                // Wait for the title's transitionend (entrance) to ensure this starts after the animation.
+                const onTransitionEnd = (e) => {
+                    if (e.propertyName && (e.propertyName.includes('transform') || e.propertyName.includes('opacity'))){
+                        // attach pointer handlers to the container for computer and touch input
+                        container.addEventListener('pointermove', pointerMoveHandler);
+                        container.addEventListener('pointerleave', pointerLeaveHandler);
+                        container.addEventListener('pointercancel', pointerLeaveHandler);
+                        // remove listener so we only initialize once
+                        title.removeEventListener('transitionend', onTransitionEnd);
+                    }
+                };
+
+                // if title is already visible and transitioned, attach immediately
+                const computed = getComputedStyle(title);
+                if (computed.opacity === '1'){
+                    // small delay to ensure final paint
+                    setTimeout(()=>{
+                        container.addEventListener('pointermove', pointerMoveHandler);
+                        container.addEventListener('pointerleave', pointerLeaveHandler);
+                        container.addEventListener('pointercancel', pointerLeaveHandler);
+                    }, 40);
+                } else {
+                    title.addEventListener('transitionend', onTransitionEnd);
+                }
+            })();
+        </script>
+
+</body>
+</html>

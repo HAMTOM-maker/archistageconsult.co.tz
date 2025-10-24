@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Helvetica+Neue:400,700&display=swap">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400&display=swap" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home Page</title>
+	<link rel="icon" type="image/png" sizes="64x64" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+	<link rel="shortcut icon" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+	<style>
+		@keyframes floatOverlay {
+			0% { transform: translateX(0px) scale(1); }
+			50% { transform: translateX(24px) scale(1.01); }
+			100% { transform: translateX(0px) scale(1); }
+		}
+		.glass-menu {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 32px;
+			width: 80%;
+			z-index: 2;
+		}
+		.glass-menu a {
+			font-family: 'Montserrat', Arial, sans-serif;
+			font-weight: 400;
+			font-size: 1.6rem;
+			color: #222;
+			text-decoration: none;
+			padding: 12px 18px 12px 20px;
+			letter-spacing: 0.5px;
+			border-radius: 6px;
+			position: relative;
+			transition: color 0.18s ease, transform 0.18s ease;
+		}
+		/* Portfolio-style yellow accent bar on hover */
+		.glass-menu a::before {
+			content: '';
+			position: absolute;
+			left: 8px;
+			top: 50%;
+			transform: translateY(-50%) scaleY(0.88);
+			width: 8px;
+			height: 56%;
+			border-radius: 6px;
+			background: linear-gradient(180deg,#ffd54f 0%,#ffb300 100%);
+			opacity: 0;
+			box-shadow: 0 6px 18px rgba(255,170,0,0.12);
+			transition: opacity 0.18s ease, transform 0.18s ease;
+		}
+		.glass-menu a:hover {
+			color: #111;
+			transform: translateX(6px);
+		}
+		.glass-menu a:hover::before {
+			opacity: 1;
+			transform: translateY(-50%) scaleY(1);
+		}
+		.social-icons {
+			position: absolute;
+			bottom: 40px;
+			left: 50%;
+			transform: translateX(-50%);
+			display: flex;
+			gap: 28px;
+			z-index: 9999;
+		}
+		.social-icon {
+			width: 48px;
+			height: 48px;
+			border-radius: 50%;
+			background: rgba(255,255,255,0.7);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+			transition: background 0.2s, box-shadow 0.2s;
+			cursor: pointer;
+		}
+		.social-icon:hover {
+			background: #ffe600;
+			box-shadow: 0 0 16px 2px #ffe600;
+		}
+		.social-icon svg {
+			width: 26px;
+			height: 26px;
+			fill: #333;
+		}
+		.glass-overlay {
+			position: fixed;
+			top: 0;
+			right: -40vw;
+			width: 40vw;
+			height: 100vh;
+			z-index: 110;
+			background: rgba(255, 245, 230, 0.55);
+			backdrop-filter: blur(18px) saturate(120%);
+			box-shadow: -8px 0 32px 0 rgba(0,0,0,0.12);
+			transition: right 0.7s cubic-bezier(.77,.2,.25,1);
+		}
+		.glass-overlay.active {
+			right: 0;
+		}
+		.hamburger:hover .bar {
+			background-color: #ffe600;
+			box-shadow: 0 0 12px 2px #ffe600;
+		}
+		/* flipped first slide: keep the horizontal flip but also animate its transform and object-position
+		   so the zoomed crop eases in/out during cross-fade instead of snapping */
+		.slide-img.flip {
+			transform: scaleX(-1);
+			transition: transform 1.2s ease, object-position 1.2s ease;
+			will-change: transform, object-position;
+		}
+		/* when the flipped (first) slide is visible, zoom it and anchor the zoom to the top so
+		   only a small portion appears inside the V overlay */
+		.slide-img.flip.active {
+			transform-origin: center top;
+			transform: scaleX(-1) scale(1.32);
+			/* move the image up so the V-shaped overlay shows a tighter crop */
+			object-position: center 12%;
+		}
+		body {
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			width: 100vw;
+			overflow: hidden;
+			position: relative;
+		}
+		.slideshow-bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			z-index: 0;
+			overflow: hidden;
+		}
+		.slide-img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			object-fit: cover;
+			object-position: center 65%;
+			filter: brightness(1.08);
+			opacity: 0;
+			/* original behavior: opacity-only cross-fade */
+			transition: opacity 1.2s ease;
+			/* keep opacity-only cross-fade; no drone animation on homepage slides */
+		}
+		.slide-img.active {
+			opacity: 1;
+			transition: opacity 1.2s ease;
+		}
+		.hamburger {
+			position: absolute;
+			top: 24px;
+			right: 24px;
+			width: 40px;
+			height: 40px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			z-index: 20;
+		}
+		.v-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 35vh;
+			z-index: 10;
+			pointer-events: none;
+		}
+		.bar {
+			width: 40px;
+			height: 4px;
+			background-color: #fff;
+			margin: 4px 0;
+			border-radius: 2px;
+			box-shadow: 0 1px 3px rgba(14, 13, 13, 0.2);
+		}
+
+		/* CTA on the right side of the slanted V overlay */
+		.overlay-cta {
+			position: absolute;
+			top: calc(35vh / 2 - 20px);
+			right: 6vw;
+			z-index: 105;
+			padding: 12px 20px;
+			border-radius: 8px;
+			border: none;
+			background: linear-gradient(120deg,#ffffff 60%,#f0f0f0 100%);
+			box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+			font-family: 'Montserrat', Arial, sans-serif;
+			font-weight: 600;
+			color: #222;
+			cursor: pointer;
+			transition: transform 0.18s ease, box-shadow 0.18s ease;
+		}
+
+		/* left-side CTA (below tagline description) */
+		/* left-side CTA (below tagline description) - claymorphism + floating */
+		.left-cta {
+			font-family: 'Montserrat', Arial, sans-serif;
+			font-size: 1.06rem;
+			font-weight: 700;
+			color: #222;
+			padding: 12px 28px;
+			border-radius: 14px;
+			border: 1px solid rgba(255,255,255,0.6);
+			background: linear-gradient(145deg, #fbfdff 0%, #e8eef8 100%);
+			box-shadow: 8px 10px 20px rgba(0,0,0,0.12), -6px -6px 16px rgba(255,255,255,0.7), inset 0 2px 0 rgba(255,255,255,0.6), inset 0 -6px 12px rgba(0,0,0,0.06);
+			/* removed glowing drop shadows to keep a clean floating look */
+			box-shadow: none;
+			cursor: pointer;
+			transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms ease, filter 220ms ease;
+			position: relative;
+			z-index: 102;
+			will-change: transform;
+			animation: floatBtn 4s ease-in-out infinite;
+		}
+		/* subtle shadow 'ground' under the floating button */
+		.left-cta::after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: -10px;
+			width: 70%;
+			height: 10px;
+			background: radial-gradient(ellipse at center, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.02) 60%);
+			filter: blur(6px);
+			/* subtler ground shadow beneath the floating button */
+			background: radial-gradient(ellipse at center, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.01) 60%);
+			filter: blur(8px);
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: -1;
+		}
+		.left-cta:hover {
+			transform: translateY(-12px) scale(1.02);
+			box-shadow: 14px 22px 40px rgba(0,0,0,0.18), -8px -8px 20px rgba(255,255,255,0.6);
+			animation-play-state: paused;
+		}
+		@keyframes floatBtn {
+			0% { transform: translateY(0); }
+			50% { transform: translateY(-10px); }
+			100% { transform: translateY(0); }
+		}
+		/* page-load entrance animation for tagline and description */
+		@keyframes fadeUp {
+			0% { opacity: 0; transform: translateY(12px); }
+			100% { opacity: 1; transform: translateY(0); }
+		}
+		.tagline-animate {
+			/* visible immediately; text reveal is handled by JS typewriter */
+			opacity: 1;
+		}
+
+		.desc-animate p {
+			opacity: 0;
+			transform: translateY(8px);
+			animation: fadeUp 700ms cubic-bezier(.2,.9,.25,1) forwards;
+		}
+		.desc-animate p:nth-child(1) { animation-delay: 620ms; }
+		.desc-animate p:nth-child(2) { animation-delay: 820ms; }
+		/* small arrow to the right of CTA */
+		.cta-arrow {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 36px;
+			height: 36px;
+			margin-left: 12px;
+			vertical-align: middle;
+			border-radius: 10px;
+			background: linear-gradient(145deg, #f7f9ff 0%, #e6eef8 100%);
+			box-shadow: 6px 8px 16px rgba(0,0,0,0.12), -4px -4px 10px rgba(255,255,255,0.7);
+			/* remove glowing shadow on arrow */
+			box-shadow: none;
+			transition: transform 180ms ease, box-shadow 180ms ease;
+			cursor: pointer;
+		}
+		.cta-arrow svg { width: 18px; height: 18px; display:block; }
+		.cta-arrow:hover { transform: translateX(6px); box-shadow: 10px 14px 30px rgba(0,0,0,0.16); }
+		.cta-arrow:hover { transform: translateX(6px); }
+		.overlay-cta:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 14px 40px rgba(0,0,0,0.22);
+		}
+
+		
+	</style>
+	<style>
+	@media (max-width: 600px) {
+		.glass-menu {
+			width: 96vw;
+			gap: 18px;
+		}
+		.glass-menu a {
+			font-size: 1.08rem;
+			padding: 8px 0;
+		}
+		.social-icons {
+			gap: 16px;
+			bottom: 18px;
+		}
+		.social-icon {
+			width: 36px;
+			height: 36px;
+		}
+		.slide-img, .slideshow-bg {
+			width: 100vw !important;
+			height: 100vh !important;
+		}
+		/* Add darker overlay on slideshow images for better text readability on mobile */
+		.slide-img::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.35);
+			pointer-events: none;
+			z-index: 1;
+		}
+		.v-overlay {
+			height: 22vh;
+		}
+		.bar {
+			width: 28px;
+			height: 3px;
+		}
+		.hamburger {
+			width: 32px;
+			height: 32px;
+			top: 12px;
+			right: 12px;
+		}
+		.glass-overlay {
+			width: 90vw;
+			right: -90vw;
+		}
+		.glass-overlay.active {
+			right: 0;
+		}
+		span[style*="font-family:Impact"] {
+			font-size: 2.1rem !important;
+			left: 12px !important;
+			top: 110px !important;
+			max-width: 90vw !important;
+			text-shadow: 0 6px 32px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.6) !important;
+		}
+		div[style*="top:390px"] {
+			top: 210px !important;
+			left: 12px !important;
+			max-width: 94vw !important;
+			font-size: 0.98rem !important;
+			text-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.5) !important;
+		}
+		img[alt="Logo"] {
+			width: 54px !important;
+			top: 8px !important;
+			left: 8px !important;
+		}
+		span[style*="font-family:'KuroTrial Heavy"] {
+			top: 32px !important;
+			left: 70px !important;
+			font-size: 0.82rem !important;
+		}
+		span[style*="top:44px"] {
+			top: 28px !important;
+			right: 48px !important;
+			font-size: 0.82rem !important;
+		}
+		.overlay-cta {
+			right: 6vw !important;
+			top: calc(22vh / 2 - 18px) !important;
+			padding: 10px 16px !important;
+			font-size: 0.95rem !important;
+		}
+		.left-cta {
+			padding: 10px 20px !important;
+			font-size: 0.98rem !important;
+		}
+	}
+	</style>
+</head>
+<body>
+	<span class="tagline-animate" style="position:absolute;top:230px;left:50px;font-family:Impact, Arial, sans-serif;font-size:3.6rem;font-weight:bold;color:#fff;z-index:101;letter-spacing:0.02em;line-height:1.08;max-width:50vw;white-space:normal;text-shadow:0 4px 24px rgba(0,0,0,0.18);">
+	<span id="taglineText"></span>
+		<div style="display:block;margin-top:18px;width:220px;height:8px;">
+			<div style="width:100%;height:4px;background:linear-gradient(90deg,#ffe600 40%,#fff700 60%);border-radius:2px;box-shadow:0 0 16px 4px #ffe600;animation:glowline 1.2s infinite alternate;"></div>
+		</div>
+	</span>
+	<style>
+		@keyframes glowline {
+			0% { box-shadow:0 0 8px 2px #ffe600; }
+			100% { box-shadow:0 0 24px 8px #ffe600; }
+		}
+	</style>
+	<div class="desc-animate" style="position:absolute;top:390px;left:50px;max-width:420px;z-index:101;font-family:'Montserrat',Arial,sans-serif;font-size:1.08rem;color:#f5f5f5;line-height:1.6;">
+		<p style="margin:0 0 8px 0;">Our designs blend creativity with functionality, elevating every project.</p>
+		<p style="margin:0;">At ARCHISTAGE CONSULT, architecture is not just structure—it's vision brought to life.</p>
+	</div>
+	<div style="position:absolute;top:540px;left:50px;z-index:101;display:flex;align-items:center;">
+		<button class="left-cta" id="leftCtaBtn">EXPLORE MORE</button>
+		<span class="cta-arrow" id="leftCtaArrow" title="Explore more">
+			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d="M5 12h14M13 5l7 7-7 7" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</span>
+	</div>
+	<img src="D:/MY documents/MY PROJECTS/ARCHITECTURE/white logo.png" alt="Logo" style="position:absolute;top:16px;left:16px;width:90px;height:auto;z-index:100;" />
+	<span style="position:absolute;top:55px;left:100px;font-family:'KuroTrial Heavy', Arial, sans-serif;font-size:1.2rem;color:#fff;z-index:101;letter-spacing:2px;">ARCHISTAGE CONSULT</span>
+	<div class="slideshow-bg">
+		<img src="D:/MY documents/MY PROJECTS/ARCHITECTURE/STAGE FOLDER/1_2 - Photo.jpg" class="slide-img flip active" alt="bg1">
+		<img src="D:/MY documents/MY PROJECTS/ARCHITECTURE/STAGE FOLDER/5_Jungle_RT.jpg" class="slide-img" alt="bg2">
+		<img src="D:/MY documents/MY PROJECTS/ARCHITECTURE/STAGE FOLDER/88.jpg" class="slide-img" alt="bg3">
+	</div>
+	<div style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1;pointer-events:none;">
+		<div style="width:100vw;height:100vh;background:rgba(0,0,0,0.18);"></div>
+	</div>
+	<div class="v-overlay">
+		<svg width="100vw" height="100vh" viewBox="0 0 100 100" preserveAspectRatio="none" style="display:block; position:absolute; top:0; left:0;">
+			<polygon points="0,100 100,100 100,30 62,100 25,0 0,0" fill="rgba(50,50,50,1)" />
+		</svg>
+	</div>
+	<!-- removed overlay CTA; adding left-side CTA below tagline description -->
+	<span style="position:absolute;top:44px;right:74px;transform:translateY(-50%);font-family:'Montserrat',Arial,sans-serif;font-size:1rem;color:#fff;z-index:21;letter-spacing:0.5px;">Menu</span>
+	<div class="hamburger" title="Menu" id="hamburgerMenu">
+		<div class="bar"></div>
+		<div class="bar"></div>
+		<div class="bar"></div>
+	</div>
+	<div class="glass-overlay" id="glassOverlay">
+		<nav class="glass-menu">
+			<a href="#home">Home</a>
+			<a href="#about">About Us</a>
+			<a href="Portfolio.html">Portfolio</a>
+			<a href="Team.html">The Team</a>
+			<a href="Contact.html">Contact</a>
+		</nav>
+		<div class="social-icons">
+			<a class="social-icon" href="https://facebook.com" target="_blank" title="Facebook">
+				<img src="D:/PROGRAMMING PROJECT/MINE MANUAL/facebook.png" alt="Facebook" style="width:32px;height:32px;object-fit:contain;" />
+			</a>
+			<a class="social-icon" href="https://instagram.com" target="_blank" title="Instagram">
+				<img src="D:/PROGRAMMING PROJECT/MINE MANUAL/instagram.png" alt="Instagram" style="width:32px;height:32px;object-fit:contain;" />
+			</a>
+			<a class="social-icon" href="https://linkedin.com" target="_blank" title="LinkedIn">
+				<img src="D:/PROGRAMMING PROJECT/MINE MANUAL/linkedin.png" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;" />
+			</a>
+			<a class="social-icon" href="mailto:example@email.com" title="Email">
+				<img src="D:/PROGRAMMING PROJECT/MINE MANUAL/email.png" alt="Email" style="width:32px;height:32px;object-fit:contain;" />
+			</a>
+		</div>
+	</div>
+	<script>
+		const hamburgerMenu = document.getElementById('hamburgerMenu');
+		const glassOverlay = document.getElementById('glassOverlay');
+		hamburgerMenu.addEventListener('click', (e) => {
+			glassOverlay.classList.toggle('active');
+			e.stopPropagation();
+		});
+		document.addEventListener('click', (e) => {
+			if (glassOverlay.classList.contains('active')) {
+				// Only close if click is outside overlay and hamburger
+				if (!glassOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+					glassOverlay.classList.remove('active');
+				}
+			}
+		});
+		glassOverlay.addEventListener('click', (e) => {
+			e.stopPropagation();
+		});
+	</script>
+	<script>
+		const slides = document.querySelectorAll('.slide-img');
+		let current = 0;
+		setInterval(() => {
+			slides[current].classList.remove('active');
+			current = (current + 1) % slides.length;
+			slides[current].classList.add('active');
+		}, 7000);
+	</script>
+	<script>
+		// CTA navigation: clicking the button or the arrow goes to About Us.html
+		(function(){
+			const leftBtn = document.getElementById('leftCtaBtn');
+			const leftArrow = document.getElementById('leftCtaArrow');
+			function goToAbout(e){
+				// small safeguard: allow modifier keys to open in new tab if used
+				if (e && (e.metaKey || e.ctrlKey || e.shiftKey)) return;
+				window.location.href = 'About Us.html';
+			}
+			if (leftBtn) leftBtn.addEventListener('click', goToAbout);
+			if (leftArrow) leftArrow.addEventListener('click', goToAbout);
+		})();
+	</script>
+	<script>
+		// Menu About navigation -> go to About Us.html
+		(function(){
+			const aboutMenuLink = document.querySelector('.glass-menu a[href="#about"]');
+			function goAbout(e){
+				if (e && (e.metaKey || e.ctrlKey || e.shiftKey)) return; // allow modifier opens
+				window.location.href = 'About Us.html';
+			}
+			if (aboutMenuLink) {
+				aboutMenuLink.addEventListener('click', function(e){ e.preventDefault(); goAbout(e); });
+			}
+		})();
+	</script>
+		<script>
+			// Simple typewriter effect for the tagline
+			(function(){
+				const el = document.getElementById('taglineText');
+				const text = 'DESIGNING SPACES, INSPIRING FUTURES';
+				let i = 0;
+				function type(){
+					if (!el) return;
+					el.textContent = text.slice(0, i);
+					i++;
+					if (i <= text.length) setTimeout(type, 42 + Math.random()*45);
+				}
+				// slight entrance delay so page loads first
+				setTimeout(type, 260);
+			})();
+		</script>
+		<script>
+			// Logo and menu Home navigation -> go to home page (index.html)
+			(function(){
+				const logoImg = document.querySelector('img[alt="Logo"]');
+				const homeMenuLink = document.querySelector('.glass-menu a[href="#home"]');
+				function goHome(e){
+					if (e && (e.metaKey || e.ctrlKey || e.shiftKey)) return; // allow modifier opens
+					window.location.href = 'index.html';
+				}
+				if (logoImg) {
+					logoImg.style.cursor = 'pointer';
+					logoImg.addEventListener('click', goHome);
+				}
+				if (homeMenuLink) {
+					homeMenuLink.addEventListener('click', function(e){ e.preventDefault(); goHome(e); });
+				}
+			})();
+		</script>

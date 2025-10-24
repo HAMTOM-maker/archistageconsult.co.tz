@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Contact</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="64x64" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <link rel="shortcut icon" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <style>
+        html,body{height:100%;margin:0;font-family:Montserrat,Arial,sans-serif}
+        .hero{position:relative;height:100vh;overflow:hidden}
+        .slideshow-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:hidden}
+        /* subtle drone-like pan & slow-zoom loop to match About Us */
+        .slide-img{position:absolute;inset:0;width:100vw;height:100vh;object-fit:cover;object-position:center 55%;filter:brightness(1.02);transform-origin:center center;animation:droneLoop 10s ease-in-out infinite;will-change:transform}
+
+        @keyframes droneLoop {
+            0% { transform: scale(1.06) translateY(0%); }
+            25% { transform: scale(1.09) translateY(-1.5%); }
+            50% { transform: scale(1.12) translateY(-3%); }
+            75% { transform: scale(1.09) translateY(-1.5%); }
+            100% { transform: scale(1.06) translateY(0%); }
+        }
+        .overlay-dark{position:absolute;inset:0;background:rgba(0,0,0,0.42);z-index:1}
+        .menu-control{position:fixed;top:22px;right:16px;display:flex;align-items:center;gap:10px;z-index:22}
+    .menu-label{font-family:Montserrat, Arial, sans-serif;font-weight:400;font-size:1rem;color:#fff;letter-spacing:0.5px;text-transform:none}
+    .hamburger{position:relative;width:40px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;transition:box-shadow .18s ease, transform .12s ease}
+    .bar{width:36px;height:4px;background-color:#fff;margin:4px 0;border-radius:2px;transition:background .18s ease, box-shadow .18s ease, transform .18s ease}
+    /* yellow glow on hover */
+    .hamburger:hover{box-shadow:0 8px 30px rgba(255,180,0,0.18), 0 0 18px rgba(255,196,36,0.12);transform:translateY(-1px)}
+    .hamburger:hover .bar{background:linear-gradient(90deg,#ffd54f 0%,#ffb300 100%);box-shadow:0 6px 14px rgba(255,170,0,0.18)}
+    /* slight stagger for visual interest */
+    .hamburger:hover .bar:nth-child(1){transform:translateX(-1px)}
+    .hamburger:hover .bar:nth-child(3){transform:translateX(1px)}
+        .center-wrap{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:22}
+    .center-logo{width:56px;height:56px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:#fff;padding:4px;box-shadow:0 12px 30px rgba(0,0,0,0.32);border:1px solid rgba(0,0,0,0.06);transform:scale(0.92);opacity:0}
+    .center-logo img{max-width:100%;max-height:100%;object-fit:contain;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,0.35))}
+        /* pop-in animation for logo badge (faster) */
+        @keyframes popIn {
+            0%{ transform: scale(0.7); opacity: 0 }
+            60%{ transform: scale(1.04); opacity: 1 }
+            100%{ transform: scale(1); opacity: 1 }
+        }
+        .center-logo.pop{ animation: popIn 320ms cubic-bezier(.2,.9,.2,1) forwards }
+    .center-title{display:block;margin-top:8px;font-family:'KuroTrial Heavy',Arial,sans-serif;color:#fff;font-size:1.12rem;letter-spacing:2px;text-shadow:0 6px 18px rgba(0,0,0,0.48)}
+    .contact-label{display:block;margin-top:8px;font-family:Montserrat,Arial,sans-serif;color:#fff;font-size:1.9rem;font-weight:700;text-shadow:0 8px 20px rgba(0,0,0,0.46)}
+        .glass-overlay{position:fixed;top:0;right:-40vw;width:40vw;height:100vh;background:rgba(255,245,230,0.55);backdrop-filter:blur(18px) saturate(120%);box-shadow:-8px 0 32px rgba(0,0,0,0.12);transition:right .7s cubic-bezier(.77,.2,.25,1);z-index:30}
+        .glass-overlay.active{right:0}
+    .glass-menu{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:32px;width:80%;}
+    .glass-menu a{font-family:Montserrat, Arial, sans-serif;font-size:1.6rem;color:#222;text-decoration:none;padding:12px 18px 12px 20px;letter-spacing:0.5px;border-radius:6px;position:relative;transition:color .18s ease, transform .18s ease}
+    /* subtle yellow accent bar that appears when hovering the sidebar links */
+    .glass-menu a::before{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%) scaleY(0.88);width:8px;height:56%;border-radius:6px;background:linear-gradient(180deg,#ffd54f 0%,#ffb300 100%);opacity:0;box-shadow:0 6px 18px rgba(255,170,0,0.12);transition:opacity .18s ease, transform .18s ease}
+    .glass-menu a:hover{color:#111;transform:translateX(6px)}
+    .glass-menu a:hover::before{opacity:1;transform:translateY(-50%) scaleY(1)}
+        .social-icons{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:28px}
+        .social-icon{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center}
+    /* contact area below the hero */
+    .contact-main{background:#fff;padding:48px 0;color:#111}
+    .contact-main .container{max-width:1100px;margin:0 auto;padding:0 28px}
+    .get-in-touch{font-family:'Haettenschweiler','Arial Black',Impact,Arial,sans-serif;font-size:44px;margin:0 0 18px;color:#111;letter-spacing:1px}
+    .map-wrap{width:100%;background:#eee;border:1px solid #e6e6e6;box-shadow:0 6px 20px rgba(0,0,0,0.06);overflow:hidden;border-radius:4px}
+    .map-wrap .map-thumb{display:block;text-decoration:none}
+    .map-wrap .map-thumb img{width:100%;height:480px;object-fit:cover;display:block;border:0}
+    .map-cta{display:block;margin-top:12px;font-size:0.95rem;color:#1565c0;text-decoration:none}
+    /* Responsive adjustments */
+    @media (max-width:900px){
+        .hero{height:80vh}
+        .center-wrap{top:44%}
+        .center-logo{width:48px;height:48px;padding:3px;transform:scale(0.96)}
+        .center-title{font-size:1rem}
+        .contact-label{font-size:1.6rem}
+        .get-in-touch{font-size:36px}
+        .map-wrap iframe,.map-wrap .map-thumb img{height:420px}
+        .contact-main{padding:36px 0}
+    }
+    @media (max-width:600px){
+        .hero{height:60vh}
+        .center-wrap{top:42%}
+        .center-logo{width:44px;height:44px}
+        .center-title{font-size:0.95rem}
+        .contact-label{font-size:1.4rem}
+        .get-in-touch{font-size:30px}
+        .map-wrap iframe,.map-wrap .map-thumb img{height:320px}
+        .menu-control{top:14px;right:12px}
+        .hamburger{width:36px;height:36px}
+        .bar{width:30px;height:3px}
+        .contact-main .container{padding:0 16px}
+        /* Sidebar contents: match Portfolio small-screen sizing */
+        .glass-menu{gap:18px}
+        .glass-menu a{font-size:1.08rem;padding:8px 0}
+        .social-icons{gap:16px;bottom:18px}
+        .social-icon{width:36px;height:36px}
+    }
+    @media (max-width:420px){
+        .hero{height:54vh}
+        .center-logo{width:40px;height:40px}
+        .center-title{font-size:0.9rem}
+        .contact-label{font-size:1.2rem}
+        .get-in-touch{font-size:26px}
+        .map-wrap iframe,.map-wrap .map-thumb img{height:220px}
+        .glass-overlay{width:90vw;right:-90vw}
+        .footer-inner{padding:22px}
+        .footer-content{grid-template-columns:1fr}
+        /* tighten footer link row to keep one line on very small screens */
+        .site-footer .footer-nav{gap:10px}
+        .site-footer .footer-nav a{font-size:0.86rem}
+    }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="slideshow-bg">
+            <img src="file:///D:/MY documents/MY PROJECTS/ARCHITECTURE/STAGE FOLDER/1_31 - Photo.jpg" alt="contact-bg" class="slide-img" loading="eager">
+        </div>
+        <div class="overlay-dark"></div>
+
+        <div class="menu-control">
+            <span class="menu-label">Menu</span>
+            <div class="hamburger" id="hamburgerMenu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+
+        <div class="center-wrap">
+            <span class="center-logo" id="centerLogo"><img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/logo.png.png" alt="Logo"></span>
+            <span class="center-title">ARCHISTAGE CONSULT</span>
+            <span class="contact-label">Contact</span>
+        </div>
+    </div>
+    
+    <!-- GET IN TOUCH block (matches screenshot) -->
+    <section class="contact-main">
+        <div class="container">
+            <h2 class="get-in-touch">GET IN TOUCH</h2>
+            <div class="map-wrap">
+                <!-- Embedded interactive Google Map (provided by user) -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3982.9524635484076!2d36.681258379345664!3d-3.361791228242395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zM8KwMjEnNDEuNiJTIDM2wrA0MScwMS44IkU!5e0!3m2!1sen!2stz!4v1759240299769!5m2!1sen!2stz" width="100%" height="480" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <a class="map-cta" href="https://maps.app.goo.gl/ZRjrN1HNXCkhdYts5" target="_blank" rel="noopener">Open in Google Maps</a>
+        </div>
+    </section>
+
+    <!-- Footer (copied from About Us) -->
+    <style>
+    .site-footer{position:relative;background:#0e1316;color:#d8d8d8;overflow:hidden;font-family:Montserrat,Arial,sans-serif}
+    .site-footer .footer-bg{position:absolute;inset:0;background-image:url('file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/pp.jpg');background-size:cover;background-position:center;opacity:0.18;filter:grayscale(20%);pointer-events:none;z-index:0}
+    .site-footer .footer-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:42px 26px}
+    .site-footer .footer-top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:18px;margin-bottom:18px}
+    .footer-brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{width:72px;height:36px;display:flex;align-items:center;justify-content:center}
+    .brand-mark img{width:100%;height:auto;display:block}
+    .brand-name{font-family:'KuroTrial Black', 'KuroTrial Heavy', Arial, sans-serif;font-weight:800;color:#fff;letter-spacing:1px;font-size:1.1rem}
+    .footer-nav a{color:rgba(255,255,255,0.72);text-decoration:none;margin-left:22px;font-size:0.95rem}
+    .footer-content{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;padding:18px 6px}
+    .site-footer h4{color:#fff;margin:6px 0 10px;font-size:0.95rem;letter-spacing:1px}
+    .site-footer p{color:rgba(255,255,255,0.72);margin:0;font-size:0.95rem;line-height:1.6}
+    .subscribe .subscribe-row{display:flex;gap:8px;margin-top:8px}
+    .subscribe input{flex:1;padding:10px 12px;border-radius:24px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff}
+    .send-btn{width:44px;height:44px;border-radius:50%;border:0;background:linear-gradient(180deg,#f3b21a,#d9970f);display:inline-flex;align-items:center;justify-content:center;color:#081218;cursor:pointer}
+    .socials{margin-top:14px;display:flex;gap:10px;align-items:center}
+    .socials a{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);color:#fff;text-decoration:none}
+    .socials img{width:18px;height:18px;object-fit:contain;filter:invert(1) brightness(2)}
+    .site-footer .footer-bottom{background:rgba(0,0,0,0.12);text-align:center;padding:14px 10px;color:rgba(255,255,255,0.55);font-size:0.95rem}
+    @media (max-width:900px){ .footer-content{grid-template-columns:repeat(2,1fr)} .footer-nav a{margin-left:12px} }
+    @media (max-width:480px){ .footer-content{grid-template-columns:1fr} .footer-top{flex-direction:column;align-items:flex-start;gap:10px} }
+    /* Match About Us footer on small screens (≤600px): logo row then centered one-line nav */
+    @media (max-width:600px){
+        .site-footer .footer-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+        .site-footer .footer-brand{flex:0 0 100%}
+        /* Single-line, left-aligned nav like screenshot; prevent wrap */
+        .site-footer .footer-nav{flex:0 0 100%;display:flex;flex-wrap:nowrap;align-items:center;gap:12px;margin-left:0;margin-top:8px;padding:8px 0;justify-content:flex-start;white-space:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+        .site-footer .footer-nav a{margin:0;font-size:0.9rem}
+    }
+    </style>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-bg" aria-hidden="true"></div>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a class="brand-mark" href="index.html" title="Home"><img src="D:/MY documents/MY PROJECTS/ARCHITECTURE/white logo.png" alt="ARCHISTAGE logo"></a>
+                    <div class="brand-name">ARCHISTAGE CONSULT</div>
+                </div>
+                <div class="footer-nav">
+                    <a href="index.html">Home</a>
+                    <a href="About Us.html">About Us</a>
+                    <a href="Portfolio.html">Portfolio</a>
+                    <a href="Team.html">The Team</a>
+                    <a href="Contact.html">Contact</a>
+                </div>
+            </div>
+
+            <div class="footer-content">
+                <div class="col location">
+                    <h4>OUR LOCATION</h4>
+                    <p>Mianzini, Arusha</p>
+                </div>
+                <div class="col phone">
+                    <h4>OUR PHONE NUMBER</h4>
+                    <p>+255 756 660 232</p>
+                </div>
+                <div class="col mail">
+                    <h4>OUR CONTACT MAIL</h4>
+                    <p style="display:flex;flex-direction:column;gap:6px">
+                        <span>archistageconsult@gmail.com</span>
+                    </p>
+                </div>
+                <div class="col subscribe">
+                    <h4>SUBSCRIBE</h4>
+                    <p>Your email address</p>
+                    <div class="subscribe-row">
+                        <input id="footerSubscribeEmail" type="email" placeholder="Your email address" aria-label="Your email address">
+                        <a class="send-btn" id="footerSendBtn" href="mailto:archistageconsult@gmail.com" aria-label="Subscribe">✈</a>
+                    </div>
+                    <div class="socials">
+                        <a href="https://facebook.com" aria-label="facebook" target="_blank"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/facebook.png" alt="fb"></a>
+                        <a href="https://instagram.com" aria-label="instagram" target="_blank"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/instagram.png" alt="ig"></a>
+                        <a href="https://linkedin.com" aria-label="linkedin" target="_blank"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/linkedin.png" alt="li"></a>
+                        <a href="mailto:archistageconsult@gmail.com" aria-label="email"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/email.png" alt="email"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">Copyright © 2025 - archstage consult</div>
+        </div>
+    </footer>
+
+    <div class="glass-overlay" id="glassOverlay">
+        <nav class="glass-menu">
+            <a href="index.html">Home</a>
+            <a href="About Us.html">About Us</a>
+            <a href="Portfolio.html">Portfolio</a>
+            <a href="Team.html">The Team</a>
+            <a href="Contact.html">Contact</a>
+        </nav>
+        <div class="social-icons">
+            <a class="social-icon" href="https://facebook.com" target="_blank" title="Facebook"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/facebook.png" alt="fb" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="https://instagram.com" target="_blank" title="Instagram"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/instagram.png" alt="ig" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="https://linkedin.com" target="_blank" title="LinkedIn"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/linkedin.png" alt="li" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="mailto:archistageconsult@gmail.com" title="Email"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/email.png" alt="email" style="width:22px;height:22px;object-fit:contain"></a>
+        </div>
+    </div>
+
+    <script>
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const glassOverlay = document.getElementById('glassOverlay');
+        hamburgerMenu.addEventListener('click', (e) => {
+            glassOverlay.classList.toggle('active');
+            e.stopPropagation();
+        });
+        document.addEventListener('click', (e) => {
+            if (glassOverlay.classList.contains('active')){
+                if (!glassOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)){
+                    glassOverlay.classList.remove('active');
+                }
+            }
+        });
+        glassOverlay.addEventListener('click', (e) => e.stopPropagation());
+
+        const centerLogo = document.getElementById('centerLogo');
+        if (centerLogo) centerLogo.addEventListener('click', ()=> location.href='index.html');
+        // pop the logo on load (faster reveal)
+        window.addEventListener('load', ()=>{
+            setTimeout(()=>{ centerLogo && centerLogo.classList.add('pop'); }, 40);
+        });
+        // Map is shown as a clickable thumbnail that links to the shared maps URL.
+        // Note: the static thumbnail uses the Google Static Maps API URL. If you prefer a guaranteed image, provide an image file
+        // or an API key for the Static Maps API and I can embed that instead.
+    </script>
+    <script>
+        // Footer flight/send button: attach email input if provided
+        (function(){
+            const footerBtn = document.getElementById('footerSendBtn');
+            const footerInput = document.getElementById('footerSubscribeEmail');
+            if (!footerBtn) return;
+            footerBtn.addEventListener('click', function(e){
+                const val = footerInput && footerInput.value ? footerInput.value.trim() : '';
+                let subject = encodeURIComponent('Subscription / Contact');
+                let body = '';
+                if (val) body = encodeURIComponent('Subscriber email: ' + val + '\n');
+                const to = 'archistageconsult@gmail.com';
+                const href = `mailto:${to}?subject=${subject}&body=${body}`;
+                // update href then allow default navigation
+                footerBtn.href = href;
+            });
+        })();
+    </script>
+</body>
+</html>

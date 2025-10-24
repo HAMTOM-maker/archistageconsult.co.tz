@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>The Team</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/png" sizes="64x64" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+	<link rel="shortcut icon" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+	<style>
+		html,body{height:100%;margin:0;font-family:Montserrat,Arial,sans-serif}
+		/* smooth anchor scrolling */
+		html{scroll-behavior:smooth}
+		/* Make hero fixed so content scrolls over and covers it */
+		.hero{position:fixed;inset:0;height:100vh;overflow:hidden;z-index:0}
+		.slideshow-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:hidden}
+		/* subtle drone-like pan & slow-zoom loop to match Contact */
+		.slide-img{position:absolute;inset:0;width:100vw;height:100vh;object-fit:cover;object-position:center 55%;filter:brightness(1.02);transform-origin:center center;animation:droneLoop 10s ease-in-out infinite;will-change:transform}
+
+		@keyframes droneLoop {
+			0% { transform: scale(1.06) translateY(0%); }
+			25% { transform: scale(1.09) translateY(-1.5%); }
+			50% { transform: scale(1.12) translateY(-3%); }
+			75% { transform: scale(1.09) translateY(-1.5%); }
+			100% { transform: scale(1.06) translateY(0%); }
+		}
+		.overlay-dark{position:absolute;inset:0;background:rgba(0,0,0,0.42);z-index:1}
+		.menu-control{position:fixed;top:22px;right:16px;display:flex;align-items:center;gap:10px;z-index:22}
+		.menu-label{font-family:Montserrat, Arial, sans-serif;font-weight:400;font-size:1rem;color:#fff;letter-spacing:0.5px;text-transform:none}
+		.hamburger{position:relative;width:40px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;transition:box-shadow .18s ease, transform .12s ease}
+		.bar{width:36px;height:4px;background-color:#fff;margin:4px 0;border-radius:2px;transition:background .18s ease, box-shadow .18s ease, transform .18s ease}
+		/* yellow glow on hover */
+		.hamburger:hover{box-shadow:0 8px 30px rgba(255,180,0,0.18), 0 0 18px rgba(255,196,36,0.12);transform:translateY(-1px)}
+		.hamburger:hover .bar{background:linear-gradient(90deg,#ffd54f 0%,#ffb300 100%);box-shadow:0 6px 14px rgba(255,170,0,0.18)}
+		/* slight stagger for visual interest */
+		.hamburger:hover .bar:nth-child(1){transform:translateX(-1px)}
+		.hamburger:hover .bar:nth-child(3){transform:translateX(1px)}
+		.center-wrap{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:22;will-change:transform,opacity}
+		.center-logo{width:56px;height:56px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:#fff;padding:4px;box-shadow:0 12px 30px rgba(0,0,0,0.32);border:1px solid rgba(0,0,0,0.06);transform:scale(0.92);opacity:0}
+		.center-logo img{max-width:100%;max-height:100%;object-fit:contain;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,0.35))}
+		/* pop-in animation for logo badge (same as Contact) */
+		@keyframes popIn {
+			0%{ transform: scale(0.7); opacity: 0 }
+			60%{ transform: scale(1.04); opacity: 1 }
+			100%{ transform: scale(1); opacity: 1 }
+		}
+		.center-logo.pop{ animation: popIn 320ms cubic-bezier(.2,.9,.2,1) forwards }
+		.center-title{display:block;margin-top:8px;font-family:'KuroTrial Heavy',Arial,sans-serif;color:#fff;font-size:1.12rem;letter-spacing:2px;text-shadow:0 6px 18px rgba(0,0,0,0.48)}
+		.team-label{display:block;margin-top:8px;font-family:Montserrat,Arial,sans-serif;color:#fff;font-size:2.2rem;font-weight:700;text-shadow:0 8px 20px rgba(0,0,0,0.46)}
+
+		.glass-overlay{position:fixed;top:0;right:-40vw;width:40vw;height:100vh;background:rgba(255,245,230,0.55);backdrop-filter:blur(18px) saturate(120%);box-shadow:-8px 0 32px rgba(0,0,0,0.12);transition:right .7s cubic-bezier(.77,.2,.25,1);z-index:30}
+		.glass-overlay.active{right:0}
+		.glass-menu{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:32px;width:80%;}
+		.glass-menu a{font-family:Montserrat, Arial, sans-serif;font-size:1.6rem;color:#222;text-decoration:none;padding:12px 18px 12px 20px;letter-spacing:0.5px;border-radius:6px;position:relative;transition:color .18s ease, transform .18s ease}
+		/* Portfolio-style yellow accent bar that appears when hovering the sidebar links */
+		.glass-menu a::before{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%) scaleY(0.88);width:8px;height:56%;border-radius:6px;background:linear-gradient(180deg,#ffd54f 0%,#ffb300 100%);opacity:0;box-shadow:0 6px 18px rgba(255,170,0,0.12);transition:opacity .18s ease, transform .18s ease}
+		.glass-menu a:hover{color:#111;transform:translateX(6px)}
+		.glass-menu a:hover::before{opacity:1;transform:translateY(-50%) scaleY(1)}
+		.social-icons{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:28px}
+		.social-icon{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center}
+
+		/* Meet The Team title section (under hero) */
+		.team-title-section{position:relative;z-index:1;background:#fff;padding:40px 0;text-align:center;margin-top:100vh}
+		.team-title-section h2{margin:0;font-family:Montserrat,Arial,sans-serif;font-weight:400;font-size:2.8rem;color:#333;letter-spacing:0.5px}
+		.team-title-section .title-underline{width:26px;height:2px;background:#333;margin:10px auto 0;border-radius:2px;opacity:0.85}
+
+		/* Team members grid */
+		.team-section{position:relative;z-index:1;background:#fff;padding:10px 0 60px}
+		.team-grid{max-width:1200px;margin:0 auto;padding:0 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+		.team-card{background:#fff;border:1px solid #eee;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.06);overflow:hidden;display:flex;flex-direction:column}
+		.team-card .img-wrap{position:relative;background:#f2f2f2;aspect-ratio:1/1;overflow:hidden}
+		.team-card img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;filter:grayscale(100%)}
+		.team-card .card-body{padding:18px 16px;color:#333}
+		.team-role{font-family:Montserrat,Arial,sans-serif;font-size:0.9rem;color:#777;margin:0 0 6px}
+		.team-name{font-family:Montserrat,Arial,sans-serif;font-weight:600;font-size:1.3rem;margin:0 0 12px;color:#222}
+		.team-bio{font-family:Montserrat,Arial,sans-serif;font-size:0.98rem;color:#555;line-height:1.7;margin:0}
+
+		/* Animated red gradient underline just below the team member name */
+		.team-name::after{content:"";display:block;width:36px;height:3px;margin-top:6px;border-radius:2px;background:linear-gradient(90deg,#7a0b0b 0%,#e53935 100%);background-size:200% 100%;animation:teamRedBar 2.2s ease-in-out infinite alternate}
+
+		@keyframes teamRedBar{0%{background-position:0% 50%;transform:translateX(0)}100%{background-position:100% 50%;transform:translateX(4px)}}
+
+		/* Scroll reveal animations */
+		/* title reveal */
+		.team-title-section h2,
+		.team-title-section .title-underline{opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.2,.9,.2,1), transform .6s cubic-bezier(.2,.9,.2,1);will-change:opacity,transform}
+		.team-title-section h2.in-view,
+		.team-title-section .title-underline.in-view{opacity:1;transform:none}
+		/* cards reveal */
+		.team-card{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.2,.9,.2,1), transform .6s cubic-bezier(.2,.9,.2,1)}
+		.team-card.in-view{opacity:1;transform:none}
+
+		@media (max-width:900px){
+			.team-grid{grid-template-columns:repeat(2,1fr)}
+			.team-card img{height:100%}
+		}
+		@media (max-width:600px){
+			.team-grid{grid-template-columns:1fr;gap:18px}
+			.team-card img{height:100%}
+			/* mobile-friendly sidebar sizing */
+			.glass-overlay{width:90vw;right:-90vw}
+			.glass-menu{width:96vw;gap:18px}
+			.glass-menu a{font-size:1.08rem;padding:8px 0}
+			.social-icons{gap:16px;bottom:18px}
+			.social-icon{width:36px;height:36px}
+		}
+
+		/* Responsive adjustments (copied from Contact) */
+		@media (max-width:900px){
+			/* keep hero full-screen for cover-on-scroll */
+			.hero{height:100vh}
+			.center-wrap{top:44%}
+			.center-logo{width:48px;height:48px;padding:3px;transform:scale(0.96)}
+			.center-title{font-size:1rem}
+			.team-label{font-size:1.8rem}
+		}
+		@media (max-width:600px){
+			.hero{height:100vh}
+			.center-wrap{top:42%}
+			.center-logo{width:44px;height:44px}
+			.center-title{font-size:0.95rem}
+			.team-label{font-size:1.6rem}
+			.team-title-section h2{font-size:2.2rem}
+			.team-title-section .title-underline{width:22px}
+			.team-name::after{width:32px}
+			.menu-control{top:14px;right:12px}
+			.hamburger{width:36px;height:36px}
+			.bar{width:30px;height:3px}
+		}
+		@media (max-width:420px){
+			.hero{height:100vh}
+			.center-logo{width:40px;height:40px}
+			.center-title{font-size:0.9rem}
+			.team-label{font-size:1.3rem}
+			.team-title-section h2{font-size:1.9rem}
+			.team-title-section .title-underline{width:20px}
+			.glass-overlay{width:90vw;right:-90vw}
+			.team-name::after{width:28px}
+		}
+	</style>
+</head>
+<body>
+	<div class="hero">
+		<div class="slideshow-bg">
+			<img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_31%20-%20Photo.jpg" alt="team-bg" class="slide-img" loading="eager">
+		</div>
+		<div class="overlay-dark"></div>
+
+		<div class="menu-control">
+			<span class="menu-label">Menu</span>
+			<div class="hamburger" id="hamburgerMenu">
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+			</div>
+		</div>
+
+		<div class="center-wrap">
+			<span class="center-logo" id="centerLogo"><img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/logo.png.png" alt="Logo"></span>
+			<span class="center-title">ARCHISTAGE CONSULT</span>
+			<span class="team-label">Our Team</span>
+		</div>
+	</div>
+
+	<!-- Title section under the hero -->
+	<section class="team-title-section" aria-label="Team heading">
+		<h2>Meet The Team</h2>
+		<div class="title-underline" aria-hidden="true"></div>
+	</section>
+
+	<!-- Team members grid (six cards) -->
+	<section class="team-section" aria-label="Team members">
+		<div class="team-grid">
+			<article class="team-card">
+				<div class="img-wrap">
+					<img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/2.jpg" alt="Portrait of Amina Khalid" loading="lazy">
+				</div>
+				<div class="card-body">
+					<p class="team-role">Architect</p>
+					<h3 class="team-name">Amina Khalid</h3>
+					<p class="team-bio">Amina leads concept development and design coordination. With a passion for climate‑responsive architecture, she blends functionality with human‑centered aesthetics to shape timeless spaces.</p>
+				</div>
+			</article>
+
+			<article class="team-card">
+				<div class="img-wrap">
+					<img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/1.jpg" alt="Portrait of Daniel Mensah" loading="lazy">
+				</div>
+				<div class="card-body">
+					<p class="team-role">Project Manager</p>
+					<h3 class="team-name">Daniel Mensah</h3>
+					<p class="team-bio">Daniel oversees project timelines and stakeholder communication. He focuses on quality delivery, cost control, and smooth site execution from kickoff to handover.</p>
+				</div>
+			</article>
+
+			<article class="team-card">
+				<div class="img-wrap">
+					<img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/3.jpg" alt="Portrait of Leila Omari" loading="lazy">
+				</div>
+				<div class="card-body">
+					<p class="team-role">Interior Designer</p>
+					<h3 class="team-name">Leila Omari</h3>
+					<p class="team-bio">Leila curates materials, textures, and lighting to create warm, functional interiors. Her work balances modern minimalism with local craft and context.</p>
+				</div>
+			</article>
+
+			<article class="team-card">
+				<div class="img-wrap">
+					<img src="https://images.unsplash.com/photo-1542019160-705a2d679c2a?q=80&w=1200&auto=format&fit=crop" alt="Portrait of Kelvin Mwangi" loading="lazy">
+				</div>
+				<div class="card-body">
+					<p class="team-role">Structural Engineer</p>
+					<h3 class="team-name">Kelvin Mwangi</h3>
+					<p class="team-bio">Kelvin develops robust and efficient structural systems. He optimizes safety, material use, and constructability while supporting architectural intent.</p>
+				</div>
+			</article>
+
+			<article class="team-card">
+				<div class="img-wrap">
+					<img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1200&auto=format&fit=crop" alt="Portrait of Nuru Said" loading="lazy">
+				</div>
+				<div class="card-body">
+					<p class="team-role">Landscape Architect</p>
+					<h3 class="team-name">Nuru Said</h3>
+					<p class="team-bio">Nuru designs site experiences that connect people with nature—integrating shade, native planting, and water‑sensitive strategies into each project.</p>
+				</div>
+			</article>
+
+			<article class="team-card">
+				<div class="img-wrap">
+					<img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/Mine.jpg" alt="Portrait of Farida Juma" loading="lazy">
+				</div>
+				<div class="card-body">
+					<p class="team-role">MEP Engineer</p>
+					<h3 class="team-name">Farida Juma</h3>
+					<p class="team-bio">Farida engineers building services for comfort and efficiency—integrating ventilation, power, and water systems with sustainability at the core.</p>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<div class="glass-overlay" id="glassOverlay">
+		<nav class="glass-menu">
+			<a href="index.html">Home</a>
+			<a href="About Us.html">About Us</a>
+			<a href="Portfolio.html">Portfolio</a>
+			<a href="Team.html">The Team</a>
+			<a href="Contact.html">Contact</a>
+		</nav>
+		<div class="social-icons">
+			<a class="social-icon" href="https://facebook.com" target="_blank" title="Facebook"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/facebook.png" alt="fb" style="width:22px;height:22px;object-fit:contain"></a>
+			<a class="social-icon" href="https://instagram.com" target="_blank" title="Instagram"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/instagram.png" alt="ig" style="width:22px;height:22px;object-fit:contain"></a>
+			<a class="social-icon" href="https://linkedin.com" target="_blank" title="LinkedIn"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/linkedin.png" alt="li" style="width:22px;height:22px;object-fit:contain"></a>
+			<a class="social-icon" href="mailto:archistageconsult@gmail.com" title="Email"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/email.png" alt="email" style="width:22px;height:22px;object-fit:contain"></a>
+		</div>
+	</div>
+
+	<script>
+		// Hamburger toggle and outside-click close (same behavior as Contact)
+		const hamburgerMenu = document.getElementById('hamburgerMenu');
+		const glassOverlay = document.getElementById('glassOverlay');
+		hamburgerMenu.addEventListener('click', (e) => {
+			glassOverlay.classList.toggle('active');
+			e.stopPropagation();
+		});
+		document.addEventListener('click', (e) => {
+			if (glassOverlay.classList.contains('active')){
+				if (!glassOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)){
+					glassOverlay.classList.remove('active');
+				}
+			}
+		});
+		glassOverlay.addEventListener('click', (e) => e.stopPropagation());
+
+		// pop the logo on load
+		const centerLogo = document.getElementById('centerLogo');
+		if (centerLogo) {
+			window.addEventListener('load', ()=>{
+				setTimeout(()=>{ centerLogo && centerLogo.classList.add('pop'); }, 60);
+			});
+			centerLogo.addEventListener('click', ()=> location.href='index.html');
+		}
+
+		// Scroll-reveal: smoothly reveal title and team cards as they enter viewport
+		(function(){
+			if (!('IntersectionObserver' in window)) return; // graceful fallback
+			const titleEls = Array.from(document.querySelectorAll('.team-title-section h2, .team-title-section .title-underline'));
+			const cards = Array.from(document.querySelectorAll('.team-card'));
+			// small stagger for title parts and cards
+			titleEls.forEach((el, i)=>{ el.style.transitionDelay = (i*100)+'ms'; });
+			cards.forEach((el, i)=>{ el.style.transitionDelay = (Math.min(i, 10)*70)+'ms'; });
+			const io = new IntersectionObserver((entries, obs)=>{
+				entries.forEach(en=>{
+					if (en.isIntersecting){
+						en.target.classList.add('in-view');
+						obs.unobserve(en.target);
+					}
+				});
+			},{ threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+			[...titleEls, ...cards].forEach(el=> io.observe(el));
+		})();
+
+		// Hero text fades and slides slightly up as user scrolls down
+		(function(){
+			const centerWrap = document.querySelector('.center-wrap');
+			if (!centerWrap) return;
+			const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (prefersReduced) return; // respect user motion preferences
+			let ticking = false;
+			function onScroll(){
+				if (ticking) return;
+				ticking = true;
+				requestAnimationFrame(()=>{
+					const vh = Math.max(1, window.innerHeight || 1);
+					const y = window.scrollY || window.pageYOffset || 0;
+					const p = Math.max(0, Math.min(1, y / (vh * 0.6))); // progress 0..1
+					const shift = Math.round(p * 18); // px upward shift up to 18px
+					centerWrap.style.opacity = (1 - p).toFixed(3);
+					centerWrap.style.transform = `translate(-50%, calc(-50% - ${shift}px))`;
+					ticking = false;
+				});
+			}
+			window.addEventListener('scroll', onScroll, { passive: true });
+			window.addEventListener('resize', onScroll);
+			// initialize
+			onScroll();
+		})();
+	</script>
+</body>
+</html>

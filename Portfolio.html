@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Portfolio</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="64x64" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <link rel="shortcut icon" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/white%20logo.png">
+    <style>
+        html,body{height:100%;margin:0;font-family:Montserrat,Arial,sans-serif}
+        .hero{position:relative;height:100vh;overflow:hidden}
+        .slideshow-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:hidden}
+        .slide-img{position:absolute;inset:0;width:100vw;height:100vh;object-fit:cover;object-position:center 55%;filter:brightness(1.02);transform-origin:center center;animation:droneLoop 10s ease-in-out infinite;will-change:transform}
+        @keyframes droneLoop{0%{transform:scale(1.06) translateY(0%)}25%{transform:scale(1.09) translateY(-1.5%)}50%{transform:scale(1.12) translateY(-3%)}75%{transform:scale(1.09) translateY(-1.5%)}100%{transform:scale(1.06) translateY(0%)}}
+    .overlay-dark{position:absolute;inset:0;background:rgba(0,0,0,0.62);z-index:1}
+        .menu-control{position:fixed;top:22px;right:16px;display:flex;align-items:center;gap:10px;z-index:22}
+    .menu-label{font-family:Montserrat, Arial, sans-serif;font-weight:400;font-size:1rem;color:#fff;letter-spacing:0.5px;text-transform:none}
+        .hamburger{position:relative;width:40px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;transition:box-shadow .18s ease, transform .12s ease}
+        .bar{width:36px;height:4px;background-color:#fff;margin:4px 0;border-radius:2px;transition:background .18s ease, box-shadow .18s ease, transform .18s ease}
+        .hamburger:hover{box-shadow:0 8px 30px rgba(255,180,0,0.18), 0 0 18px rgba(255,196,36,0.12);transform:translateY(-1px)}
+        .hamburger:hover .bar{background:linear-gradient(90deg,#ffd54f 0%,#ffb300 100%);box-shadow:0 6px 14px rgba(255,170,0,0.18)}
+        .hamburger:hover .bar:nth-child(1){transform:translateX(-1px)}
+        .hamburger:hover .bar:nth-child(3){transform:translateX(1px)}
+        .center-wrap{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:22}
+        .center-logo{width:64px;height:64px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:#fff;padding:4px;box-shadow:0 12px 30px rgba(0,0,0,0.32);border:1px solid rgba(0,0,0,0.06);transform:scale(0.98);opacity:0}
+        .center-logo img{max-width:100%;max-height:100%;object-fit:contain;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,0.35))}
+        @keyframes popIn{0%{transform:scale(0.7);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1);opacity:1}}
+        .center-logo.pop{animation:popIn 320ms cubic-bezier(.2,.9,.2,1) forwards}
+    .center-title{display:block;margin-top:8px;font-family:'KuroTrial Heavy',Arial,sans-serif;color:#fff;font-size:1.12rem;letter-spacing:2px;text-shadow:0 6px 18px rgba(0,0,0,0.48)}
+    .selected-projects{display:block;margin-top:10px;font-family:Montserrat,Arial,sans-serif;font-size:1.6rem;color:#fff;font-weight:700;letter-spacing:1px;text-shadow:0 8px 22px rgba(0,0,0,0.5)}
+        .glass-overlay{position:fixed;top:0;right:-40vw;width:40vw;height:100vh;background:rgba(255,245,230,0.55);backdrop-filter:blur(18px) saturate(120%);box-shadow:-8px 0 32px rgba(0,0,0,0.12);transition:right .7s cubic-bezier(.77,.2,.25,1);z-index:30}
+        .glass-overlay.active{right:0}
+        .glass-menu{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:32px;width:80%;}
+        .glass-menu a{font-family:Montserrat, Arial, sans-serif;font-size:1.6rem;color:#222;text-decoration:none;padding:12px 18px 12px 20px;letter-spacing:0.5px;border-radius:6px;position:relative;transition:color .18s ease, transform .18s ease}
+        .glass-menu a::before{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%) scaleY(0.88);width:8px;height:56%;border-radius:6px;background:linear-gradient(180deg,#ffd54f 0%,#ffb300 100%);opacity:0;box-shadow:0 6px 18px rgba(255,170,0,0.12);transition:opacity .18s ease, transform .18s ease}
+        .glass-menu a:hover{color:#111;transform:translateX(6px)}
+        .glass-menu a:hover::before{opacity:1;transform:translateY(-50%) scaleY(1)}
+        .social-icons{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:28px}
+        .social-icon{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center}
+        /* responsive */
+    /* Match Contact.html: keep overlay 40vw until very small screens */
+    @media (max-width:900px){.hero{height:80vh}.center-logo{width:56px;height:56px}.center-title{font-size:1rem}}
+    /* Reduce sidebar content sizing on small screens (match Contact feel) */
+    @media (max-width:600px){
+        .glass-menu{gap:18px}
+        .glass-menu a{font-size:1.08rem;padding:8px 0}
+        .social-icons{gap:16px;bottom:18px}
+        .social-icon{width:36px;height:36px}
+        .hamburger{width:36px;height:36px}
+        .bar{width:30px;height:3px}
+    }
+    @media (max-width:420px){.center-logo{width:48px;height:48px}.center-title{font-size:0.92rem}.glass-overlay{width:90vw;right:-90vw}}
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="slideshow-bg">
+            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/c.jpg" alt="portfolio-bg" class="slide-img" loading="eager">
+        </div>
+        <div class="overlay-dark"></div>
+
+        <div class="menu-control">
+            <span class="menu-label">Menu</span>
+            <div class="hamburger" id="hamburgerMenu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+
+        <div class="center-wrap">
+            <span class="center-logo" id="centerLogo"><img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/logo.png.png" alt="Logo"></span>
+            <span class="center-title">ARCHISTAGE CONSULT</span>
+            <span class="selected-projects">SELECTED PROJECTS</span>
+        </div>
+    </div>
+
+    <div class="glass-overlay" id="glassOverlay">
+        <nav class="glass-menu">
+            <a href="index.html">Home</a>
+            <a href="About Us.html">About Us</a>
+            <a href="Portfolio.html">Portfolio</a>
+            <a href="Team.html">The Team</a>
+            <a href="Contact.html">Contact</a>
+        </nav>
+        <div class="social-icons">
+            <a class="social-icon" href="https://facebook.com" target="_blank" title="Facebook"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/facebook.png" alt="fb" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="https://instagram.com" target="_blank" title="Instagram"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/instagram.png" alt="ig" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="https://linkedin.com" target="_blank" title="LinkedIn"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/linkedin.png" alt="li" style="width:22px;height:22px;object-fit:contain"></a>
+            <a class="social-icon" href="mailto:archistageconsult@gmail.com" title="Email"><img src="D:/PROGRAMMING PROJECT/MINE MANUAL/email.png" alt="email" style="width:22px;height:22px;object-fit:contain"></a>
+        </div>
+    </div>
+
+    <script>
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const glassOverlay = document.getElementById('glassOverlay');
+        hamburgerMenu.addEventListener('click', (e) => {
+            glassOverlay.classList.toggle('active');
+            e.stopPropagation();
+        });
+        document.addEventListener('click', (e) => {
+            if (glassOverlay.classList.contains('active')){
+                if (!glassOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)){
+                    glassOverlay.classList.remove('active');
+                }
+            }
+        });
+        glassOverlay.addEventListener('click', (e) => e.stopPropagation());
+
+        const centerLogo = document.getElementById('centerLogo');
+        if (centerLogo) centerLogo.addEventListener('click', ()=> location.href='index.html');
+        window.addEventListener('load', ()=>{ setTimeout(()=>{ centerLogo && centerLogo.classList.add('pop'); }, 60); });
+    </script>
+        <!-- Category navigation (tabs) -->
+        <nav class="category-nav" aria-label="Project categories">
+            <div class="cat-row">
+                <button class="cat-item active" data-target="hotels">Hotels & Lodges</button>
+                <button class="cat-item" data-target="residential">Residential Design</button>
+                <button class="cat-item" data-target="multifunctional">Multifunctional Buildings</button>
+                <button class="cat-item" data-target="educational">Educational Institutions</button>
+            </div>
+            <div class="cat-row">
+                <button class="cat-item" data-target="health">Health Centres</button>
+                <button class="cat-item" data-target="interior">Interior Designs</button>
+                <button class="cat-item" data-target="religious">Religious Buildings</button>
+            </div>
+        <div class="cat-underline" aria-hidden="true"><div class="indicator"></div></div>
+        </nav>
+
+        <!-- Category Description Section -->
+        <section class="category-description">
+            <div class="description-content">
+                <p id="categoryDescription">We believe great design begins with the client at its core—seamlessly blending architecture with natural surroundings to create immersive, functional hospitality spaces. Our approach ensures that every project is unique, thoughtfully designed, and tailored to your budget, delivering a harmonious experience for both guests and the environment.</p>
+            </div>
+        </section>
+
+        <!-- All Projects Grid Section -->
+        <section class="all-projects-grid">
+            <div id="projectImagesGrid" class="project-images-grid">
+                <!-- Images will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <style>
+            .category-nav{max-width:1200px;margin:28px auto;padding:0 18px;position:relative}
+            .cat-row{display:flex;gap:36px;padding:8px 0;border-top:4px solid rgba(0,0,0,0.06);border-bottom:4px solid rgba(0,0,0,0.06)}
+            /* first (top) row should stay spaced, second row should align left and be tighter */
+            .cat-row:first-child{justify-content:space-between}
+            .cat-row:last-child{justify-content:flex-start;gap:18px}
+            .cat-row + .cat-row{margin-top:8px}
+            .cat-item{background:transparent;border:0;padding:16px 8px;font-family:Montserrat,Arial,sans-serif;font-weight:800;color:#111;cursor:pointer;position:relative;font-size:1.12rem}
+            .cat-item.active{color:#000}
+    /* make underline container span the nav height so the indicator can move vertically */
+    .cat-underline{position:absolute;left:18px;right:18px;top:0;height:100%;pointer-events:none}
+    .cat-underline .indicator{position:absolute;left:0;top:0;height:4px;width:160px;background:#000;box-shadow:0 2px 0 #000;transform-origin:left center;transition:transform .28s cubic-bezier(.2,.9,.2,1), width .28s, top .28s, opacity .18s;opacity:0}
+            @media (max-width:900px){.cat-row{gap:18px}.cat-item{font-size:0.95rem}.cat-underline::after{width:120px}}
+
+            /* Category Description Section */
+            .category-description {
+                max-width: 1200px;
+                margin: 40px auto;
+                padding: 0 18px;
+                text-align: center;
+            }
+            
+            .description-content p {
+                font-family: Montserrat, Arial, sans-serif;
+                font-size: 1.1rem;
+                line-height: 1.7;
+                color: #555;
+                max-width: 800px;
+                margin: 0 auto;
+                font-weight: 400;
+            }
+
+            /* All Projects Grid Section */
+            .all-projects-grid {
+                max-width: 1200px;
+                margin: 60px auto;
+                padding: 0 18px;
+            }
+
+            .project-images-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                margin-top: 40px;
+            }
+
+            .grid-image-container {
+                position: relative;
+                overflow: hidden;
+                border-radius: 8px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                cursor: pointer;
+                aspect-ratio: 16/10;
+            }
+
+            .grid-image-container:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+            }
+
+            .grid-image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                transition: transform 0.3s ease;
+            }
+
+            .grid-image-container:hover img {
+                transform: scale(1.03);
+            }
+
+            /* Hide the old slideshow section */
+            .pages-viewport {
+                display: none !important;
+            }
+
+            /* Mobile responsiveness for grid */
+            @media (max-width: 768px) {
+                .project-images-grid {
+                    grid-template-columns: 1fr;
+                    gap: 15px;
+                    margin-top: 30px;
+                }
+                
+                .grid-image-container {
+                    aspect-ratio: 16/10;
+                }
+                
+                .all-projects-grid {
+                    padding: 0 15px;
+                    margin: 40px auto;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .project-images-grid {
+                    gap: 10px;
+                    margin-top: 20px;
+                }
+                
+                .grid-image-container {
+                    aspect-ratio: 4/3;
+                }
+            }
+
+            /* Show the pages viewport with all category images */
+            .pages-viewport {
+                display: block;
+                max-width: 1200px;
+                margin: 60px auto 0;
+                padding: 0 18px;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .project-images {
+                    grid-template-columns: 1fr;
+                    gap: 20px;
+                }
+                
+                .project-image-container img {
+                    height: 300px;
+                }
+                
+                .description-content p {
+                    font-size: 1rem;
+                    padding: 0 10px;
+                }
+            }
+        </style>
+
+        <style>
+            /* detail image view (lightbox) */
+            .detail-view{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:640;opacity:0;pointer-events:none;transition:opacity .26s ease}
+            .detail-view.open{opacity:1;pointer-events:auto}
+            .detail-view .detail-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.72)}
+            .detail-view .detail-frame{position:relative;z-index:2;max-width:92vw;max-height:92vh;display:flex;align-items:center;justify-content:center}
+            .detail-view .detail-img{max-width:100%;max-height:100%;border-radius:6px;box-shadow:0 26px 80px rgba(0,0,0,0.6);display:block}
+            .detail-view .detail-close{position:absolute;right:-8px;top:-8px;background:#fff;border-radius:50%;border:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;box-shadow:0 10px 30px rgba(0,0,0,0.18)}
+            @media (max-width:640px){.detail-view .detail-frame{max-width:96vw;max-height:80vh}.detail-view .detail-close{right:6px;top:6px}}
+        </style>
+        <!-- Pages slider: each page corresponds to a category and contains project thumbnail cards -->
+        <main class="pages-viewport">
+            <div class="pages">
+                <!-- Hotels & Lodges -->
+                <section class="page" id="hotels">
+                    <h3>Hotels & Lodges</h3>
+                    <div class="cards-grid">
+                        <article class="card" data-name="Hotel 001" data-year="2024" data-client="Archistage Group" data-location="Lagos, Nigeria" data-status="Completed">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/001_1%20-%20Photo.jpg" alt="Hotel 001" loading="lazy">
+                            <div class="card-title">Hotel 001</div>
+                        </article>
+                        <article class="card" data-name="Hotel 1_4">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_4%20-%20Photo.jpg" alt="Hotel 1_4" loading="lazy">
+                            <div class="card-title">Hotel 1_4</div>
+                        </article>
+                        <article class="card" data-name="Hotel 1_11">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_11%20-%20Photo.jpg" alt="Hotel 1_11" loading="lazy">
+                            <div class="card-title">Hotel 1_11</div>
+                        </article>
+                        <article class="card" data-name="Hotel 1_511">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_511%20-%20Photo.jpg" alt="Hotel 1_511" loading="lazy">
+                            <div class="card-title">Hotel 1_511</div>
+                        </article>
+                        <article class="card" data-name="Hotel 1_811">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_811%20-%20Photo.jpg" alt="Hotel 1_811" loading="lazy">
+                            <div class="card-title">Hotel 1_811</div>
+                        </article>
+                        <article class="card" data-name="Hotel 2_41">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/2_41%20-%20Photo.jpg" alt="Hotel 2_41" loading="lazy">
+                            <div class="card-title">Hotel 2_41</div>
+                        </article>
+                        <article class="card" data-name="Hotel Hall Try">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/HALL%20TRY_1%20-%20Photo.jpg" alt="Hotel Hall Try" loading="lazy">
+                            <div class="card-title">Hall Try</div>
+                        </article>
+                        <article class="card" data-name="Hotel r">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/r.jpg" alt="Hotel r" loading="lazy">
+                            <div class="card-title">Hotel r</div>
+                        </article>
+                        <article class="card" data-name="Proposal 6">
+                            <img src="file:///C:/Users/cassi/AppData/Local/Microsoft/Windows/INetCache/IE/I7DZZD6V/PROPOSAL_6%20-%20Photo[1].jpg" alt="PROPOSAL_6 - Photo" loading="lazy">
+                            <div class="card-title">Proposal 6</div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Residential Design -->
+                <section class="page" id="residential">
+                    <h3>Residential Design</h3>
+                    <div class="cards-grid">
+                        <article class="card" data-name="Residence 1616">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1616.jpg" alt="Residence 1616" loading="lazy">
+                            <div class="card-title">Residence 1616</div>
+                        </article>
+                        <article class="card" data-name="Residence b">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/b.jpg" alt="Residence b" loading="lazy">
+                            <div class="card-title">Residence b</div>
+                        </article>
+                        <article class="card" data-name="Residence bb">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/bb.jpg" alt="Residence bb" loading="lazy">
+                            <div class="card-title">Residence bb</div>
+                        </article>
+                        <article class="card" data-name="Residence c">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/c.jpg" alt="Residence c" loading="lazy">
+                            <div class="card-title">Residence c</div>
+                        </article>
+                        <article class="card" data-name="Residence d">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/d.jpg" alt="Residence d" loading="lazy">
+                            <div class="card-title">Residence d</div>
+                        </article>
+                        <article class="card" data-name="Residence e">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/e.jpg" alt="Residence e" loading="lazy">
+                            <div class="card-title">Residence e</div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Multifunctional Buildings -->
+                <section class="page" id="multifunctional">
+                    <h3>Multifunctional Buildings</h3>
+                    <div class="cards-grid">
+                        <article class="card" data-name="Multifunctional z">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/z.jpg" alt="z" loading="lazy">
+                            <div class="card-title">z</div>
+                        </article>
+                        <article class="card" data-name="Multifunctional IMG-20250925-WA0027">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/IMG-20250925-WA0027.jpg" alt="IMG-20250925-WA0027" loading="lazy">
+                            <div class="card-title">IMG-20250925-WA0027</div>
+                        </article>
+                        <article class="card" data-name="Multifunctional IMG-20250925-WA0031">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/IMG-20250925-WA0031.jpg" alt="IMG-20250925-WA0031" loading="lazy">
+                            <div class="card-title">IMG-20250925-WA0031</div>
+                        </article>
+                        <article class="card" data-name="Multifunctional ff">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/ff.jpg" alt="ff" loading="lazy">
+                            <div class="card-title">ff</div>
+                        </article>
+                        <article class="card" data-name="Multifunctional 88">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/88.jpg" alt="88" loading="lazy">
+                            <div class="card-title">88</div>
+                        </article>
+                        <article class="card" data-name="Multifunctional 1_1 - Photo">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_1%20-%20Photo.jpg" alt="1_1 - Photo" loading="lazy">
+                            <div class="card-title">1_1 - Photo</div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Educational Institutions -->
+                <section class="page" id="educational">
+                    <h3>Educational Institutions</h3>
+                    <div class="cards-grid">
+                        <article class="card" data-name="Educational oo">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/oo.jpg" alt="oo" loading="lazy">
+                            <div class="card-title">oo</div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Health Centres -->
+                <section class="page" id="health">
+                    <h3>Health Centres</h3>
+                    <div class="cards-grid">
+                        <article class="card" data-name="Health l">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/l.jpg" alt="l" loading="lazy">
+                            <div class="card-title">l</div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Interior Designs -->
+                <section class="page" id="interior">
+                    <h3>Interior Designs</h3>
+                    <div class="cards-grid">
+                        <article class="card" data-name="Interior 8_19 - Photo">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/8_19%20-%20Photo.jpg" alt="8_19 - Photo" loading="lazy">
+                            <div class="card-title">8_19 - Photo</div>
+                        </article>
+                        <article class="card" data-name="Interior 8_17 - Photo">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/8_17%20-%20Photo.jpg" alt="8_17 - Photo" loading="lazy">
+                            <div class="card-title">8_17 - Photo</div>
+                        </article>
+                        <article class="card" data-name="Interior 7_Photo - 9">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/7_Photo%20-%209.jpg" alt="7_Photo - 9" loading="lazy">
+                            <div class="card-title">7_Photo - 9</div>
+                        </article>
+                        <article class="card" data-name="Interior 7_Photo - 7">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/7_Photo%20-%207.jpg" alt="7_Photo - 7" loading="lazy">
+                            <div class="card-title">7_Photo - 7</div>
+                        </article>
+                        <article class="card" data-name="Interior 5_Photo - 6">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/5_Photo%20-%206.jpg" alt="5_Photo - 6" loading="lazy">
+                            <div class="card-title">5_Photo - 6</div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Religious Buildings -->
+                <section class="page" id="religious">
+                    <h3>Religious Buildings</h3>
+                    <div class="cards-grid">
+                        <article class="card" data-name="Religious 2_1 - Photo">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/2_1%20-%20Photo.jpg" alt="2_1 - Photo" loading="lazy">
+                            <div class="card-title">2_1 - Photo</div>
+                        </article>
+                        <article class="card" data-name="Religious 2_7 - Photo">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/2_7%20-%20Photo.jpg" alt="2_7 - Photo" loading="lazy">
+                            <div class="card-title">2_7 - Photo</div>
+                        </article>
+                        <article class="card" data-name="Religious m">
+                            <img src="file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/m.jpg" alt="m" loading="lazy">
+                            <div class="card-title">m</div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <style>
+            /* make pages fit exactly into the viewport: no inter-page gap */
+            .pages-viewport{max-width:1200px;margin:18px auto;padding:0;overflow:hidden}
+            .pages{display:flex;transition:transform .6s cubic-bezier(.2,.9,.2,1);gap:0}
+            .page{flex:0 0 100%;box-sizing:border-box;padding:18px}
+            .page h3{font-family:Montserrat,Arial,sans-serif;margin:6px 0 12px}
+            /* larger square cards: 3 columns by default, responsive down to 2/1 */
+            .cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;box-sizing:border-box}
+            /* modern card visual: sharp corners, layered, smooth lift */
+            .card{background:#fff;border-radius:0;overflow:hidden;box-shadow:0 14px 36px rgba(6,15,20,0.12);cursor:pointer;display:block;transition:transform .36s cubic-bezier(.2,.9,.2,1),box-shadow .36s,filter .36s;position:relative}
+            /* make image square using aspect-ratio so thumbnails are true squares */
+            .card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.2,.9,.2,1);will-change:transform}
+
+            /* subtle gradient overlay so white text is readable */
+            .card::after{content:'';position:absolute;left:0;right:0;top:0;height:64%;bottom:auto;background:linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.22) 40%, rgba(0,0,0,0.46) 100%);pointer-events:none;z-index:8;border-radius:0}
+
+            /* title overlay (placed above the image) - hidden per user request */
+            .card-title{display:none !important;position:absolute;left:0;right:0;bottom:0;padding:12px 14px;font-weight:800;text-align:left;font-size:1rem;color:#fff;z-index:16;background:linear-gradient(180deg, rgba(0,0,0,0.00), rgba(0,0,0,0.28));
+                opacity:0;transform:translateY(6px);transition:opacity .28s ease, transform .28s ease;pointer-events:none}
+
+            /* hover lift and image scale */
+            .card:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(6,15,20,0.18);filter:brightness(1.02)}
+            .card:hover img{transform:scale(1.08)}
+            .card:hover .card-title{opacity:1;transform:translateY(0);pointer-events:auto}
+
+            /* reveal on scroll: initial state */
+            .card{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.9,.2,1), transform .6s cubic-bezier(.2,.9,.2,1)}
+            .card.in-view{opacity:1;transform:none}
+            /* keep three columns until 900px to fit 3 cards on most desktop widths */
+            @media (max-width:900px){.cards-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+            @media (max-width:640px){.cards-grid{grid-template-columns:1fr}}
+            /* overlay + CTA */
+            .card{position:relative}
+            /* overlay sits above the image but content is anchored to the bottom so thumbnail remains visible */
+            .card .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding:12px 18px 24px 18px;box-sizing:border-box;flex-direction:column;gap:12px;color:#fff;opacity:0;transform:translateY(6px);transition:opacity .28s ease, transform .28s ease;z-index:20}
+
+            /* thin white stroked square that appears when card pops on hover */
+            .card::before{content:'';position:absolute;left:12px;right:12px;top:12px;bottom:12px;box-sizing:border-box;border:2px solid rgba(255,255,255,0.95);transform:scale(.86);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.2,.9,.2,1),opacity .22s,box-shadow .22s;z-index:16;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.18))}
+
+            /* hover/pointer state: card lifts slightly and the white stroked square scales in */
+            .card:hover{transform:translateY(-8px);box-shadow:0 22px 46px rgba(0,0,0,0.14)}
+            .card:hover::before{transform:scale(1);opacity:1}
+            .card:hover .overlay,.card:focus-within .overlay{opacity:1;transform:none}
+            /* abstract decorative shapes using layered radial-gradients */
+            .card .overlay::before{content:'';position:absolute;inset:0;z-index:0;background:
+                radial-gradient(circle at 10% 20%, rgba(255,200,80,0.10) 0 8%, transparent 18%),
+                radial-gradient(circle at 80% 80%, rgba(255,120,80,0.08) 0 12%, transparent 28%),
+                linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.45));mix-blend-mode:overlay}
+            .overlay-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
+            .overlay-title{font-size:1.05rem;font-weight:800;text-align:center}
+            .cta{color:#fff;text-decoration:none;padding:12px 18px;font-weight:800;display:inline-flex;align-items:center;gap:10px;border-radius:999px; /* pill */
+                background:linear-gradient(90deg,#8B0000 0%,#ff3b3b 100%); /* dark red -> red */
+                box-shadow:0 18px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.25); /* strong black dropshadow */
+                transform:translateY(0);transition:transform .22s cubic-bezier(.2,.9,.2,1), box-shadow .22s, filter .22s;}
+            .cta:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(0,0,0,0.6), 0 10px 20px rgba(0,0,0,0.35);filter:brightness(1.03)}
+            .cta:active{transform:translateY(-2px)}
+            .cta .arrow{display:inline-block;transition:transform .18s ease}
+            .card:hover .cta .arrow{transform:translateX(8px)}
+            @media (max-width:640px){.overlay-title{font-size:0.98rem}.cta{padding:8px 12px}
+                /* disable heavy hover/popup effects on small screens */
+                .card{transform:none}
+                .card::before{display:none}
+            }
+        </style>
+
+        <script>
+            // Category content data with detailed project information
+            const categoryData = {
+                hotels: {
+                    description: "We believe great design begins with the client at its core—seamlessly blending architecture with natural surroundings to create immersive, functional hospitality spaces. Our approach ensures that every project is unique, thoughtfully designed, and tailored to your budget, delivering a harmonious experience for both guests and the environment.",
+                    projects: [
+                        {
+                            name: "Luxury Safari Lodge",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/001_1%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_4%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_11%20-%20Photo.jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Serengeti, Tanzania",
+                            year: "2024",
+                            projectSize: "2400m²",
+                            projectCost: "USD 1,200,000",
+                            architect: "Archistage Consult",
+                            description: "A luxury eco-lodge designed to blend harmoniously with the African landscape, featuring sustainable materials and panoramic views of the Serengeti."
+                        },
+                        {
+                            name: "Boutique City Hotel",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_4%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_511%20-%20Photo.jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Lagos, Nigeria",
+                            year: "2024",
+                            projectSize: "1800m²",
+                            projectCost: "USD 950,000",
+                            architect: "Archistage Consult",
+                            description: "Contemporary urban hotel design combining modern aesthetics with traditional Nigerian architectural elements."
+                        },
+                        {
+                            name: "Resort Conference Center",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_11%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_811%20-%20Photo.jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Abuja, Nigeria",
+                            year: "2023",
+                            projectSize: "3200m²",
+                            projectCost: "USD 1,800,000",
+                            architect: "Archistage Consult",
+                            description: "Multi-purpose resort facility featuring conference halls, accommodation wings, and recreational amenities."
+                        },
+                        {
+                            name: "Waterfront Lodge",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_511%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/2_41%20-%20Photo.jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Lake Victoria, Kenya",
+                            year: "2024",
+                            projectSize: "2800m²",
+                            projectCost: "USD 1,450,000",
+                            architect: "Archistage Consult",
+                            description: "Exclusive lakefront accommodation with private jetty access and panoramic water views."
+                        },
+                        {
+                            name: "Mountain Retreat",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_811%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/HALL%20TRY_1%20-%20Photo.jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Kilimanjaro, Tanzania",
+                            year: "2023",
+                            projectSize: "1600m²",
+                            projectCost: "USD 870,000",
+                            architect: "Archistage Consult",
+                            description: "High-altitude retreat offering stunning mountain vistas and sustainable eco-friendly design."
+                        },
+                        {
+                            name: "Business Hotel Complex",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/2_41%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/r.jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Accra, Ghana",
+                            year: "2024",
+                            projectSize: "4200m²",
+                            projectCost: "USD 2,100,000",
+                            architect: "Archistage Consult",
+                            description: "Modern business-class hotel with integrated conference facilities and executive suites."
+                        },
+                        {
+                            name: "Heritage Lodge",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/HALL%20TRY_1%20-%20Photo.jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Cape Coast, Ghana",
+                            year: "2023",
+                            projectSize: "1900m²",
+                            projectCost: "USD 1,050,000",
+                            architect: "Archistage Consult",
+                            description: "Cultural heritage-inspired accommodation showcasing local architectural traditions."
+                        },
+                        {
+                            name: "Coastal Resort",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/r.jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Zanzibar, Tanzania",
+                            year: "2024",
+                            projectSize: "3600m²",
+                            projectCost: "USD 1,950,000",
+                            architect: "Archistage Consult",
+                            description: "Beachfront resort complex with private villas and world-class spa facilities."
+                        },
+                        {
+                            name: "Urban Proposal Hotel",
+                            images: [
+                                "file:///C:/Users/cassi/AppData/Local/Microsoft/Windows/INetCache/IE/I7DZZD6V/PROPOSAL_6%20-%20Photo[1].jpg"
+                            ],
+                            sector: "Hotels and Lodges",
+                            location: "Kigali, Rwanda",
+                            year: "2025",
+                            projectSize: "2200m²",
+                            projectCost: "USD 1,300,000",
+                            architect: "Archistage Consult",
+                            description: "Proposed contemporary hotel design for Rwanda's capital city with sustainable features."
+                        }
+                    ]
+                },
+                residential: {
+                    description: "Our residential designs focus on creating personalized living spaces that reflect the unique lifestyle and aspirations of each family. We integrate sustainable materials, innovative spatial planning, and contemporary aesthetics to craft homes that are both functional and inspiring, fostering comfort and connection with the natural environment.",
+                    projects: [
+                        {
+                            name: "Modern Family Villa",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1616.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/b.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/bb.jpg"
+                            ],
+                            sector: "Residential Design",
+                            location: "Banana Island, Lagos",
+                            year: "2024",
+                            projectSize: "850m²",
+                            projectCost: "USD 650,000",
+                            architect: "Archistage Consult",
+                            description: "Contemporary family residence featuring open-plan living, sustainable materials, and integrated smart home technology."
+                        },
+                        {
+                            name: "Luxury Duplex",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/b.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/c.jpg"
+                            ],
+                            sector: "Residential Design",
+                            location: "Victoria Island, Lagos",
+                            year: "2023",
+                            projectSize: "620m²",
+                            projectCost: "USD 480,000",
+                            architect: "Archistage Consult",
+                            description: "Elegant two-story residence with panoramic city views and premium finishes throughout."
+                        },
+                        {
+                            name: "Eco-Friendly Home",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/bb.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/d.jpg"
+                            ],
+                            sector: "Residential Design",
+                            location: "Ikoyi, Lagos",
+                            year: "2024",
+                            projectSize: "720m²",
+                            projectCost: "USD 550,000",
+                            architect: "Archistage Consult",
+                            description: "Sustainable residential design incorporating solar energy, rainwater harvesting, and natural ventilation systems."
+                        },
+                        {
+                            name: "Minimalist Retreat",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/c.jpg"
+                            ],
+                            sector: "Residential Design",
+                            location: "Lekki, Lagos",
+                            year: "2023",
+                            projectSize: "580m²",
+                            projectCost: "USD 420,000",
+                            architect: "Archistage Consult",
+                            description: "Clean-lined contemporary home emphasizing simplicity, natural light, and connection to outdoor spaces."
+                        },
+                        {
+                            name: "Traditional Modern Fusion",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/d.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/e.jpg"
+                            ],
+                            sector: "Residential Design",
+                            location: "Abuja, FCT",
+                            year: "2024",
+                            projectSize: "740m²",
+                            projectCost: "USD 590,000",
+                            architect: "Archistage Consult",
+                            description: "Innovative design blending traditional Nigerian architectural elements with contemporary living standards."
+                        },
+                        {
+                            name: "Garden Courtyard House",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/e.jpg"
+                            ],
+                            sector: "Residential Design",
+                            location: "Maitama, Abuja",
+                            year: "2023",
+                            projectSize: "680m²",
+                            projectCost: "USD 520,000",
+                            architect: "Archistage Consult",
+                            description: "Private residence centered around a landscaped courtyard, promoting indoor-outdoor living and natural cooling."
+                        }
+                    ]
+                },
+                multifunctional: {
+                    description: "Multifunctional buildings represent the future of urban development, maximizing space efficiency while serving diverse community needs. Our designs integrate commercial, residential, and recreational spaces with intelligent planning, creating vibrant hubs that promote social interaction and economic vitality while maintaining architectural coherence.",
+                    projects: [
+                        {
+                            name: "Mixed-Use Tower",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/z.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/IMG-20250925-WA0027.jpg"
+                            ],
+                            sector: "Multifunctional Buildings",
+                            location: "Central Lagos, Nigeria",
+                            year: "2024",
+                            projectSize: "12500m²",
+                            projectCost: "USD 8,500,000",
+                            architect: "Archistage Consult",
+                            description: "High-rise complex combining retail, office spaces, and residential units with integrated parking and recreational facilities."
+                        },
+                        {
+                            name: "Community Hub Center",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/IMG-20250925-WA0027.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/IMG-20250925-WA0031.jpg"
+                            ],
+                            sector: "Multifunctional Buildings",
+                            location: "Kumasi, Ghana",
+                            year: "2024",
+                            projectSize: "5600m²",
+                            projectCost: "USD 3,200,000",
+                            architect: "Archistage Consult",
+                            description: "Multi-purpose community facility housing library, meeting halls, sports complex, and commercial spaces."
+                        },
+                        {
+                            name: "Urban Development Complex",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/IMG-20250925-WA0031.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/ff.jpg"
+                            ],
+                            sector: "Multifunctional Buildings",
+                            location: "Accra, Ghana",
+                            year: "2023",
+                            projectSize: "8900m²",
+                            projectCost: "USD 5,800,000",
+                            architect: "Archistage Consult",
+                            description: "Integrated development featuring shopping mall, office towers, hotel accommodation, and entertainment venues."
+                        },
+                        {
+                            name: "Innovation District",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/ff.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/88.jpg"
+                            ],
+                            sector: "Multifunctional Buildings",
+                            location: "Nairobi, Kenya",
+                            year: "2024",
+                            projectSize: "15200m²",
+                            projectCost: "USD 12,000,000",
+                            architect: "Archistage Consult",
+                            description: "Technology and innovation hub combining co-working spaces, startup incubators, conference facilities, and retail outlets."
+                        },
+                        {
+                            name: "Residential-Commercial Block",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/88.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_1%20-%20Photo.jpg"
+                            ],
+                            sector: "Multifunctional Buildings",
+                            location: "Dar es Salaam, Tanzania",
+                            year: "2023",
+                            projectSize: "6800m²",
+                            projectCost: "USD 4,100,000",
+                            architect: "Archistage Consult",
+                            description: "Mixed-use building with ground-floor commercial spaces and upper-level residential apartments."
+                        },
+                        {
+                            name: "Cultural Entertainment Complex",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/1_1%20-%20Photo.jpg"
+                            ],
+                            sector: "Multifunctional Buildings",
+                            location: "Kampala, Uganda",
+                            year: "2024",
+                            projectSize: "7200m²",
+                            projectCost: "USD 4,800,000",
+                            architect: "Archistage Consult",
+                            description: "Multi-purpose venue featuring theaters, exhibition halls, restaurants, and cultural performance spaces."
+                        }
+                    ]
+                },
+                educational: {
+                    description: "Educational architecture plays a crucial role in shaping learning experiences and inspiring academic excellence. We design learning environments that stimulate creativity, encourage collaboration, and support diverse teaching methodologies, creating spaces where students and educators can thrive while fostering a love for lifelong learning.",
+                    projects: [
+                        {
+                            name: "Modern University Campus",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/oo.jpg"
+                            ],
+                            sector: "Educational Institutions",
+                            location: "University of Lagos, Nigeria",
+                            year: "2024",
+                            projectSize: "18500m²",
+                            projectCost: "USD 15,000,000",
+                            architect: "Archistage Consult",
+                            description: "State-of-the-art educational complex featuring lecture halls, laboratories, library facilities, and student recreation areas with sustainable design principles."
+                        }
+                    ]
+                },
+                health: {
+                    description: "Healthcare facilities require specialized design approaches that prioritize patient wellbeing, operational efficiency, and healing environments. Our health center designs incorporate evidence-based design principles, natural lighting, and therapeutic spaces that support both patient recovery and healthcare professional performance in comfortable, accessible settings.",
+                    projects: [
+                        {
+                            name: "Regional Medical Center",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/l.jpg"
+                            ],
+                            sector: "Health Centres",
+                            location: "Port Harcourt, Nigeria",
+                            year: "2024",
+                            projectSize: "8200m²",
+                            projectCost: "USD 6,500,000",
+                            architect: "Archistage Consult",
+                            description: "Comprehensive healthcare facility with emergency services, diagnostic centers, patient wards, and specialized treatment areas designed for optimal healing environments."
+                        }
+                    ]
+                },
+                interior: {
+                    description: "Interior design transforms spaces into personalized environments that reflect individual taste while optimizing functionality and comfort. Our interior solutions blend contemporary aesthetics with practical considerations, creating atmospheres that enhance daily living through thoughtful material selection, lighting design, and spatial arrangements.",
+                    projects: [
+                        {
+                            name: "Executive Office Suite",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/8_19%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/8_17%20-%20Photo.jpg"
+                            ],
+                            sector: "Interior Designs",
+                            location: "VI Business District, Lagos",
+                            year: "2024",
+                            projectSize: "450m²",
+                            projectCost: "USD 280,000",
+                            architect: "Archistage Consult",
+                            description: "Sophisticated corporate interior featuring premium materials, custom furniture, and integrated technology solutions."
+                        },
+                        {
+                            name: "Luxury Hotel Lobby",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/8_17%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/7_Photo%20-%209.jpg"
+                            ],
+                            sector: "Interior Designs",
+                            location: "Transcorp Hilton, Abuja",
+                            year: "2023",
+                            projectSize: "680m²",
+                            projectCost: "USD 420,000",
+                            architect: "Archistage Consult",
+                            description: "Grand hotel entrance and reception area with marble finishes, custom lighting, and curated art installations."
+                        },
+                        {
+                            name: "Residential Interior Makeover",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/7_Photo%20-%209.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/7_Photo%20-%207.jpg"
+                            ],
+                            sector: "Interior Designs",
+                            location: "Ikoyi, Lagos",
+                            year: "2024",
+                            projectSize: "320m²",
+                            projectCost: "USD 180,000",
+                            architect: "Archistage Consult",
+                            description: "Complete home renovation featuring contemporary African design elements, bespoke furniture, and smart home integration."
+                        },
+                        {
+                            name: "Restaurant Interior Design",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/7_Photo%20-%207.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/5_Photo%20-%206.jpg"
+                            ],
+                            sector: "Interior Designs",
+                            location: "Lekki Phase 1, Lagos",
+                            year: "2023",
+                            projectSize: "280m²",
+                            projectCost: "USD 150,000",
+                            architect: "Archistage Consult",
+                            description: "Trendy dining space with acoustic design, ambient lighting, and ergonomic seating arrangements for optimal guest experience."
+                        },
+                        {
+                            name: "Corporate Boardroom",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/5_Photo%20-%206.jpg"
+                            ],
+                            sector: "Interior Designs",
+                            location: "Marina, Lagos",
+                            year: "2024",
+                            projectSize: "120m²",
+                            projectCost: "USD 95,000",
+                            architect: "Archistage Consult",
+                            description: "High-end conference room with premium AV equipment, custom conference table, and executive-grade finishes."
+                        }
+                    ]
+                },
+                religious: {
+                    description: "Religious buildings serve as spiritual sanctuaries that must balance sacred traditions with contemporary worship needs. Our designs honor cultural heritage and spiritual significance while incorporating modern functionality, creating inspiring spaces for reflection, community gathering, and spiritual growth that resonate with diverse congregations.",
+                    projects: [
+                        {
+                            name: "Modern Church Complex",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/2_1%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/2_7%20-%20Photo.jpg"
+                            ],
+                            sector: "Religious Architecture",
+                            location: "Ikeja, Lagos",
+                            year: "2024",
+                            projectSize: "2800m²",
+                            projectCost: "USD 1,800,000",
+                            architect: "Archistage Consult",
+                            description: "Contemporary worship center with seating for 2000 congregants, featuring natural lighting, acoustic optimization, and community halls."
+                        },
+                        {
+                            name: "Community Mosque",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/2_7%20-%20Photo.jpg",
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/m.jpg"
+                            ],
+                            sector: "Religious Architecture",
+                            location: "Kano, Nigeria",
+                            year: "2023",
+                            projectSize: "1500m²",
+                            projectCost: "USD 900,000",
+                            architect: "Archistage Consult",
+                            description: "Traditional Islamic architecture with modern amenities, featuring prayer halls, ablution facilities, and educational spaces."
+                        },
+                        {
+                            name: "Interfaith Chapel",
+                            images: [
+                                "file:///D:/MY%20documents/MY%20PROJECTS/ARCHITECTURE/STAGE%20FOLDER/m.jpg"
+                            ],
+                            sector: "Religious Architecture",
+                            location: "Abuja, FCT",
+                            year: "2024",
+                            projectSize: "950m²",
+                            projectCost: "USD 650,000",
+                            architect: "Archistage Consult",
+                            description: "Multi-denominational spiritual space designed for various religious practices with flexible seating and meditation areas."
+                        }
+                    ]
+                }
+            };
+
+            // Function to update category content
+            function updateCategoryContent(categoryId) {
+                const data = categoryData[categoryId];
+                if (!data) return;
+                
+                const descriptionElement = document.getElementById('categoryDescription');
+                const gridElement = document.getElementById('projectImagesGrid');
+                
+                if (descriptionElement) {
+                    descriptionElement.textContent = data.description;
+                }
+                
+                if (gridElement && data.projects) {
+                    // Clear existing images
+                    gridElement.innerHTML = '';
+                    
+                    // Store current projects for detail view navigation
+                    window.currentCategoryProjects = data.projects;
+                    
+                    // Add all project images to grid (using first image as thumbnail)
+                    data.projects.forEach((project, index) => {
+                        const imageContainer = document.createElement('div');
+                        imageContainer.className = 'grid-image-container';
+                        
+                        const img = document.createElement('img');
+                        img.src = project.images[0]; // Use first image as thumbnail
+                        img.alt = project.name;
+                        img.loading = 'lazy';
+                        
+                        // Add click handler for detailed project view
+                        imageContainer.addEventListener('click', () => {
+                            openProjectDetail(project, index);
+                        });
+                        
+                        imageContainer.appendChild(img);
+                        gridElement.appendChild(imageContainer);
+                    });
+                }
+            }
+
+            // Enhanced project detail view function matching the screenshot layout
+            function openProjectDetail(project, index = 0) {
+                if (!project) return;
+                
+                // Create or get detail view
+                let detailNode = document.querySelector('.project-detail-view');
+                if (!detailNode) {
+                    detailNode = document.createElement('div');
+                    detailNode.className = 'project-detail-view';
+                    detailNode.innerHTML = `
+                        <div class="detail-backdrop"></div>
+                        <div class="detail-container">
+                            <button class="detail-close" aria-label="Close">✕</button>
+                            <div class="detail-content">
+                                <div class="detail-image-section">
+                                    <img class="detail-project-img" src="" alt="Project image">
+                                    <div class="detail-navigation">
+                                        <button class="detail-nav-btn detail-prev" aria-label="Previous image">←</button>
+                                        <button class="detail-nav-btn detail-next" aria-label="Next image">→</button>
+                                    </div>
+                                </div>
+                                <div class="detail-info-section">
+                                    <div class="project-header">
+                                        <h2 class="project-title"></h2>
+                                    </div>
+                                    <div class="project-details">
+                                        <div class="detail-row">
+                                            <span class="detail-label">Sector</span>
+                                            <span class="detail-value sector-value"></span>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span class="detail-label">Location</span>
+                                            <span class="detail-value location-value"></span>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span class="detail-label">Year</span>
+                                            <span class="detail-value year-value"></span>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span class="detail-label">Project Size</span>
+                                            <span class="detail-value size-value"></span>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span class="detail-label">Project Cost</span>
+                                            <span class="detail-value cost-value"></span>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span class="detail-label">Architect</span>
+                                            <span class="detail-value architect-value"></span>
+                                        </div>
+                                    </div>
+                                    <div class="project-description">
+                                        <p class="description-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(detailNode);
+
+                    // Add CSS for the new layout
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .project-detail-view {
+                            position: fixed;
+                            inset: 0;
+                            z-index: 1000;
+                            opacity: 0;
+                            pointer-events: none;
+                            transition: opacity 0.3s ease;
+                        }
+                        
+                        .project-detail-view.open {
+                            opacity: 1;
+                            pointer-events: auto;
+                        }
+                        
+                        .project-detail-view .detail-backdrop {
+                            position: absolute;
+                            inset: 0;
+                            background: rgba(0, 0, 0, 0.85);
+                        }
+                        
+                        .detail-container {
+                            position: relative;
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 0;
+                            box-sizing: border-box;
+                        }
+                        
+                        .detail-content {
+                            display: flex;
+                            width: 100vw;
+                            height: 100vh;
+                            background: white;
+                            border-radius: 0;
+                            overflow: hidden;
+                            box-shadow: none;
+                        }
+                        
+                        .detail-image-section {
+                            flex: 2;
+                            position: relative;
+                            min-height: 500px;
+                        }
+                        
+                        .detail-project-img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                        
+                        .detail-navigation {
+                            position: absolute;
+                            bottom: 30px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            display: flex;
+                            gap: 15px;
+                            padding: 15px 20px;
+                            background: rgba(0, 0, 0, 0.6);
+                            backdrop-filter: blur(10px);
+                            border-radius: 50px;
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                        }
+                        
+                        .detail-nav-btn {
+                            background: rgba(255, 255, 255, 0.1);
+                            color: white;
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            border-radius: 12px;
+                            width: 50px;
+                            height: 50px;
+                            font-size: 18px;
+                            font-weight: 300;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+                            position: relative;
+                            overflow: hidden;
+                        }
+                        
+                        .detail-nav-btn::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: -100%;
+                            width: 100%;
+                            height: 100%;
+                            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                            transition: left 0.6s ease;
+                        }
+                        
+                        .detail-nav-btn:hover {
+                            background: rgba(255, 255, 255, 0.2);
+                            border-color: rgba(255, 255, 255, 0.4);
+                            transform: translateY(-2px);
+                            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                        }
+                        
+                        .detail-nav-btn:hover::before {
+                            left: 100%;
+                        }
+                        
+                        .detail-nav-btn:active {
+                            transform: translateY(0px);
+                            transition: transform 0.1s ease;
+                        }
+                        
+                        .detail-nav-btn:disabled {
+                            opacity: 0.4;
+                            cursor: not-allowed;
+                            transform: none;
+                        }
+                        
+                        .detail-nav-btn:disabled:hover {
+                            background: rgba(255, 255, 255, 0.1);
+                            border-color: rgba(255, 255, 255, 0.2);
+                            transform: none;
+                            box-shadow: none;
+                        }
+                        
+                        /* Add subtle pulse animation when navigation is available */
+                        .detail-navigation:hover .detail-nav-btn:not(:disabled) {
+                            animation: subtle-pulse 2s infinite;
+                        }
+                        
+                        @keyframes subtle-pulse {
+                            0%, 100% { opacity: 1; }
+                            50% { opacity: 0.8; }
+                        }
+                        
+                        /* Modern glassmorphism effect for the navigation container */
+                        .detail-navigation {
+                            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                        }
+                        
+                        .detail-info-section {
+                            flex: 1;
+                            padding: 45px;
+                            display: flex;
+                            flex-direction: column;
+                            background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+                            position: relative;
+                            overflow-y: auto;
+                            max-height: 100vh;
+                        }
+                        
+                        .detail-info-section::-webkit-scrollbar {
+                            width: 8px;
+                        }
+                        
+                        .detail-info-section::-webkit-scrollbar-track {
+                            background: rgba(0, 0, 0, 0.05);
+                            border-radius: 4px;
+                        }
+                        
+                        .detail-info-section::-webkit-scrollbar-thumb {
+                            background: rgba(0, 0, 0, 0.2);
+                            border-radius: 4px;
+                            transition: background 0.2s ease;
+                        }
+                        
+                        .detail-info-section::-webkit-scrollbar-thumb:hover {
+                            background: rgba(0, 0, 0, 0.3);
+                        }
+                        
+                        .detail-info-section::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 4px;
+                            height: 100%;
+                            background: linear-gradient(180deg, #333 0%, #666 50%, transparent 100%);
+                        }
+                        
+                        .project-header {
+                            margin-bottom: 35px;
+                            position: relative;
+                            padding-bottom: 20px;
+                        }
+                        
+                        .project-header::after {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 1px;
+                            background: linear-gradient(90deg, #333 0%, transparent 100%);
+                        }
+                        
+                        .project-title {
+                            font-family: 'Montserrat', Arial, sans-serif;
+                            font-size: 2.4rem;
+                            font-weight: 300;
+                            color: #222;
+                            margin: 0;
+                            line-height: 1.15;
+                            letter-spacing: -0.5px;
+                        }
+                        
+                        .project-details {
+                            margin-bottom: 35px;
+                            background: rgba(248, 249, 250, 0.8);
+                            border-radius: 12px;
+                            padding: 20px;
+                            border: 1px solid rgba(0, 0, 0, 0.06);
+                        }
+                        
+                        .detail-row {
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 14px 0;
+                            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+                            transition: background-color 0.2s ease;
+                        }
+                        
+                        .detail-row:hover {
+                            background-color: rgba(255, 255, 255, 0.5);
+                            margin: 0 -10px;
+                            padding: 14px 10px;
+                            border-radius: 6px;
+                        }
+                        
+                        .detail-row:last-child {
+                            border-bottom: none;
+                        }
+                        
+                        .detail-label {
+                            font-weight: 600;
+                            color: #444;
+                            font-size: 0.92rem;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                            font-family: 'Montserrat', Arial, sans-serif;
+                        }
+                        
+                        .detail-value {
+                            color: #222;
+                            font-size: 0.95rem;
+                            text-align: right;
+                            font-weight: 500;
+                            font-family: 'Montserrat', Arial, sans-serif;
+                        }
+                        
+                        .project-description {
+                            flex: 1;
+                            padding-top: 25px;
+                            position: relative;
+                            padding-right: 5px;
+                        }
+                        
+                        .project-description::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 60px;
+                            height: 3px;
+                            background: linear-gradient(90deg, #333, #666);
+                            border-radius: 2px;
+                            margin-bottom: 20px;
+                        }
+                        
+                        .description-text {
+                            color: #555;
+                            line-height: 1.7;
+                            font-size: 1.05rem;
+                            margin: 0;
+                            font-family: 'Montserrat', Arial, sans-serif;
+                            font-weight: 400;
+                            text-align: justify;
+                            padding-top: 20px;
+                            padding-right: 10px;
+                            position: relative;
+                        }
+                        
+                        .description-text::first-letter {
+                            font-size: 1.4em;
+                            font-weight: 600;
+                            color: #333;
+                            float: left;
+                            line-height: 1;
+                            padding-right: 8px;
+                            margin-top: 4px;
+                            font-family: 'Montserrat', Arial, sans-serif;
+                        }
+                        
+                        .detail-close {
+                            position: absolute;
+                            top: 30px;
+                            right: 30px;
+                            background: rgba(0, 0, 0, 0.7);
+                            color: white;
+                            border: none;
+                            border-radius: 50%;
+                            width: 50px;
+                            height: 50px;
+                            font-size: 20px;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            z-index: 10;
+                            transition: all 0.2s ease;
+                        }
+                        
+                        .detail-close:hover {
+                            background: rgba(0, 0, 0, 0.9);
+                            transform: scale(1.1);
+                        }
+                        
+                        @media (max-width: 768px) {
+                            .detail-content {
+                                flex-direction: column;
+                                width: 100vw;
+                                height: 100vh;
+                            }
+                            
+                            .detail-image-section {
+                                min-height: 50vh;
+                                flex: none;
+                            }
+                            
+                            .detail-info-section {
+                                padding: 25px;
+                                overflow-y: auto;
+                                flex: 1;
+                                max-height: 50vh;
+                            }
+                            
+                            .project-title {
+                                font-size: 1.8rem;
+                                letter-spacing: -0.3px;
+                            }
+                            
+                            .project-details {
+                                padding: 15px;
+                                margin-bottom: 25px;
+                            }
+                            
+                            .detail-row {
+                                padding: 10px 0;
+                            }
+                            
+                            .project-description {
+                                padding-right: 5px;
+                            }
+                            
+                            .description-text {
+                                font-size: 1rem;
+                                line-height: 1.6;
+                                padding-right: 8px;
+                            }
+                            
+                            .description-text::first-letter {
+                                font-size: 1.3em;
+                                padding-right: 6px;
+                            }
+                            
+                            .detail-close {
+                                top: 20px;
+                                right: 20px;
+                                width: 45px;
+                                height: 45px;
+                                font-size: 18px;
+                            }
+                            
+                            .detail-navigation {
+                                bottom: 20px;
+                                padding: 12px 16px;
+                                gap: 12px;
+                            }
+                            
+                            .detail-nav-btn {
+                                width: 45px;
+                                height: 45px;
+                                font-size: 16px;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+
+                    // Add event handlers
+                    const closeBtn = detailNode.querySelector('.detail-close');
+                    const prevBtn = detailNode.querySelector('.detail-prev');
+                    const nextBtn = detailNode.querySelector('.detail-next');
+                    
+                    closeBtn.addEventListener('click', closeProjectDetail);
+                    detailNode.addEventListener('click', (ev) => {
+                        if (ev.target === detailNode || ev.target.classList.contains('detail-backdrop')) {
+                            closeProjectDetail();
+                        }
+                    });
+                    
+                    // Navigation handlers - navigate through images of the same project
+                    prevBtn.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        if (window.currentProject && window.currentProject.images && window.currentImageIndex !== undefined) {
+                            const prevIndex = (window.currentImageIndex - 1 + window.currentProject.images.length) % window.currentProject.images.length;
+                            showProjectImageAtIndex(prevIndex);
+                        }
+                    });
+                    
+                    nextBtn.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        if (window.currentProject && window.currentProject.images && window.currentImageIndex !== undefined) {
+                            const nextIndex = (window.currentImageIndex + 1) % window.currentProject.images.length;
+                            showProjectImageAtIndex(nextIndex);
+                        }
+                    });
+                    
+                    // Keyboard navigation
+                    document.addEventListener('keydown', (ev) => {
+                        if (!detailNode.classList.contains('open')) return;
+                        
+                        if (ev.key === 'Escape') {
+                            closeProjectDetail();
+                        } else if (ev.key === 'ArrowLeft') {
+                            prevBtn.click();
+                        } else if (ev.key === 'ArrowRight') {
+                            nextBtn.click();
+                        }
+                    });
+                }
+                
+                // Store current project and initialize
+                window.currentProject = project;
+                window.currentImageIndex = 0; // Start with first image
+                
+                // Populate project details and show first image
+                populateProjectDetails(detailNode, project);
+                detailNode.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                
+                // Update navigation button visibility based on number of images in this project
+                const prevBtn = detailNode.querySelector('.detail-prev');
+                const nextBtn = detailNode.querySelector('.detail-next');
+                if (project.images && project.images.length > 1) {
+                    prevBtn.style.display = 'flex';
+                    nextBtn.style.display = 'flex';
+                } else {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                }
+            }
+
+            function populateProjectDetails(detailNode, project) {
+                // Show first image by default
+                detailNode.querySelector('.detail-project-img').src = project.images[0];
+                detailNode.querySelector('.project-title').textContent = project.name;
+                detailNode.querySelector('.sector-value').textContent = project.sector;
+                detailNode.querySelector('.location-value').textContent = project.location;
+                detailNode.querySelector('.year-value').textContent = project.year;
+                detailNode.querySelector('.size-value').textContent = project.projectSize;
+                detailNode.querySelector('.cost-value').textContent = project.projectCost;
+                detailNode.querySelector('.architect-value').textContent = project.architect;
+                detailNode.querySelector('.description-text').textContent = project.description;
+            }
+
+            function showProjectImageAtIndex(index) {
+                if (!window.currentProject || !window.currentProject.images || index < 0 || index >= window.currentProject.images.length) return;
+                
+                const detailNode = document.querySelector('.project-detail-view');
+                const img = detailNode?.querySelector('.detail-project-img');
+                if (img) {
+                    img.src = window.currentProject.images[index];
+                    window.currentImageIndex = index;
+                }
+            }
+
+            function closeProjectDetail() {
+                const detailNode = document.querySelector('.project-detail-view');
+                if (!detailNode) return;
+                
+                detailNode.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            // category nav: activate + smooth scroll + underline positioning
+            (function(){
+                const items = Array.from(document.querySelectorAll('.cat-item'));
+                const underline = document.querySelector('.cat-underline .indicator');
+                const nav = document.querySelector('.category-nav');
+                if (!items.length || !underline || !nav) return;
+
+                function moveUnderlineTo(el){
+                    const navRect = nav.getBoundingClientRect();
+                    const btnRect = el.getBoundingClientRect();
+                    const offsetX = btnRect.left - navRect.left;
+                    // place the indicator under the button horizontally
+                    underline.style.transform = `translateX(${offsetX}px)`;
+                    underline.style.width = `${btnRect.width}px`;
+                    // compute vertical placement: place indicator just below the button's bottom
+                    const indicator = underline;
+                    const btnBottom = btnRect.bottom - navRect.top; // distance from nav top
+                    const indTop = Math.round(btnBottom - (indicator.clientHeight || 4));
+                    underline.style.top = `${indTop}px`;
+                }
+
+                function setActive(el){
+                    items.forEach(i=>i.classList.remove('active'));
+                    el.classList.add('active');
+                    moveUnderlineTo(el);
+                }
+
+                const pagesViewport = document.querySelector('.pages-viewport');
+                const pages = document.querySelector('.pages');
+                let currentIndex = 0;
+
+                function showPage(idx){
+                    if (!pagesViewport) return;
+                    const vw = pagesViewport.clientWidth;
+                    pages.style.transform = `translateX(${-Math.round(idx * vw)}px)`;
+                    currentIndex = idx;
+                }
+
+                function showIndicatorFor(el){
+                    if (!el) return;
+                    moveUnderlineTo(el);
+                    underline.style.opacity = '1';
+                }
+
+                function hideIndicatorIfNotActive(){
+                    const active = document.querySelector('.cat-item.active');
+                    if (!active) { underline.style.opacity = '0'; return; }
+                    // keep visible under active
+                    moveUnderlineTo(active);
+                    underline.style.opacity = '1';
+                }
+
+                items.forEach(it=>{
+                    it.addEventListener('click', ()=>{
+                        setActive(it);
+                        const id = it.getAttribute('data-target');
+                        // Update category content
+                        updateCategoryContent(id);
+                        // find index of page with matching id
+                        const idx = Array.from(document.querySelectorAll('.page')).findIndex(p=>p.id === id);
+                        if (idx >= 0) showPage(idx);
+                    });
+                    it.addEventListener('mouseenter', ()=> showIndicatorFor(it));
+                    it.addEventListener('mouseleave', ()=> hideIndicatorIfNotActive());
+                });
+
+                // initialize underline to the active item and show its page
+                const initialBtn = document.querySelector('.cat-item.active') || items[0];
+                const initialIdx = Array.from(document.querySelectorAll('.page')).findIndex(p=>p.id === (initialBtn && initialBtn.getAttribute('data-target')));
+                setTimeout(()=>{
+                    moveUnderlineTo(initialBtn);
+                    if (initialIdx >= 0) showPage(initialIdx);
+                    // Initialize content for the default category
+                    const initialId = initialBtn ? initialBtn.getAttribute('data-target') : 'hotels';
+                    updateCategoryContent(initialId);
+                }, 120);
+
+                // keep in place on resize (recompute pixel translation and underline)
+                let resizeTimer = null;
+                window.addEventListener('resize', ()=>{
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(()=>{
+                        // re-position underline and page
+                        moveUnderlineTo(document.querySelector('.cat-item.active') || items[0]);
+                        showPage(currentIndex);
+                    }, 120);
+                });
+            })();
+
+            // Inject overlays and CTA into each project card
+            (function(){
+                const cards = Array.from(document.querySelectorAll('.card'));
+                cards.forEach(card=>{
+                    // avoid double-inserting
+                    if (card.querySelector('.overlay')) return;
+                    const title = card.querySelector('.card-title');
+                    const overlay = document.createElement('div');
+                    overlay.className = 'overlay';
+                    const content = document.createElement('div');
+                    content.className = 'overlay-content';
+                    const h = document.createElement('div');
+                    h.className = 'overlay-title';
+                    h.textContent = title ? title.textContent : '';
+                    const a = document.createElement('a');
+                    a.className = 'cta';
+                    a.href = '#';
+                    a.innerHTML = 'MORE ABOUT PROJECT <span class="arrow">→</span>';
+                    content.appendChild(h);
+                    content.appendChild(a);
+                    overlay.appendChild(content);
+                    card.appendChild(overlay);
+                    // keep original title visible (we now show it as an overlay title on the card)
+                });
+            })();
+
+            // -- Full screen project gallery overlay (3 covers sliding left->right)
+            (function(){
+                // create overlay node
+                const overlay = document.createElement('div');
+                overlay.id = 'projectOverlay';
+                overlay.className = 'project-overlay';
+                overlay.setAttribute('aria-hidden','true');
+                overlay.innerHTML = `
+                    <button class="overlay-close" aria-label="Close project gallery">✕</button>
+                    <!-- overlay nav arrows -->
+                    <button class="overlay-prev" aria-label="Previous image">‹</button>
+                    <button class="overlay-next" aria-label="Next image">›</button>
+                    <div class="overlay-gallery">
+                        <div class="cover c1"></div>
+                        <div class="cover c2"></div>
+                        <div class="cover c3"></div>
+                    </div>
+                    <!-- creative horizontal band + project meta placed in the spacer area below the gallery -->
+                    <div class="overlay-band" aria-hidden="false">
+                        <div class="band-decor">
+                            <svg width="100%" height="48" viewBox="0 0 1200 48" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#ffb300" stop-opacity="0.14"/><stop offset="1" stop-color="#ff3b3b" stop-opacity="0.06"/></linearGradient></defs><rect width="1200" height="48" fill="url(#g1)"></rect></svg>
+                        </div>
+                        <div class="project-meta">
+                            <div class="meta-col">
+                                <div class="meta-label">Project</div>
+                                <div class="meta-value meta-name">—</div>
+                            </div>
+                            <div class="meta-col">
+                                <div class="meta-label">Year</div>
+                                <div class="meta-value meta-year">—</div>
+                            </div>
+                            <div class="meta-col">
+                                <div class="meta-label">Client</div>
+                                <div class="meta-value meta-client">—</div>
+                            </div>
+                            <div class="meta-col">
+                                <div class="meta-label">Location</div>
+                                <div class="meta-value meta-location">—</div>
+                            </div>
+                            <div class="meta-col">
+                                <div class="meta-label">Status</div>
+                                <div class="meta-value meta-status">—</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+
+                const b = document.body;
+                const gallery = overlay.querySelector('.overlay-gallery');
+                const covers = overlay.querySelectorAll('.cover');
+                const closeBtn = overlay.querySelector('.overlay-close');
+
+                // open overlay with full image list and a start index
+                function showAt(pos){
+                    // display three covers starting at pos
+                    const imgs = overlay._imgs || [];
+                    const len = imgs.length || 0;
+                    if (!len) return;
+                    const base = ((pos % len) + len) % len;
+                    covers.forEach((c,i)=>{
+                        const idx = (base + i) % len;
+                        c.style.backgroundImage = imgs[idx] ? `url(${imgs[idx]})` : 'none';
+                        c.style.setProperty('--tx','-120%');
+                        // reset transition delay for consistent animation
+                        c.style.transitionDelay = ((i) * 120) + 'ms';
+                    });
+                    // animate in
+                    void gallery.offsetWidth;
+                    covers.forEach((c)=> c.style.setProperty('--tx','0%'));
+                    overlay._pos = base;
+                }
+
+                function openOverlay(imgs, startIdx){
+                    overlay._imgs = imgs || [];
+                    overlay._pos = (typeof startIdx === 'number') ? startIdx : 0;
+                    showAt(overlay._pos);
+                    overlay.classList.add('open');
+                    overlay.setAttribute('aria-hidden','false');
+                    b.style.overflow = 'hidden';
+                    closeBtn && closeBtn.focus();
+                }
+
+                // populate the modern project meta fields
+                function setProjectMeta(meta){
+                    const band = overlay.querySelector('.overlay-band');
+                    if (!band) return;
+                    band.querySelector('.meta-name').textContent = meta.name || '—';
+                    band.querySelector('.meta-year').textContent = meta.year || '—';
+                    band.querySelector('.meta-client').textContent = meta.client || '—';
+                    band.querySelector('.meta-location').textContent = meta.location || '—';
+                    band.querySelector('.meta-status').textContent = meta.status || '—';
+                }
+
+
+                function closeOverlay(){
+                    overlay.classList.remove('open');
+                    overlay.setAttribute('aria-hidden','true');
+                    covers.forEach((c)=>{ c.style.transitionDelay = '0ms'; c.style.setProperty('--tx','120%'); });
+                    b.style.overflow = '';
+                }
+
+                // wire CTA clicks (delegation)
+                document.addEventListener('click', (e)=>{
+                    const a = e.target.closest && e.target.closest('.cta');
+                    if (!a) return;
+                    e.preventDefault();
+                    const card = a.closest('.card');
+                    if (!card) return;
+                    // collect all img srcs from the same page and find index
+                    const page = card.closest('.page');
+                    const allImgs = page ? Array.from(page.querySelectorAll('.card img')).map(img=>img.getAttribute('src')) : [card.querySelector('img')?.src];
+                    const pageCards = page ? Array.from(page.querySelectorAll('.card')) : [card];
+                    const idx = pageCards.indexOf(card);
+                    // limit gallery to 3 images: previous, current, next (wrap-around) for a focused gallery
+                    let imgs = Array.isArray(allImgs) ? allImgs.slice() : [];
+                    let startIdx = idx;
+                    if (imgs.length > 3){
+                        const len = imgs.length;
+                        const prev = ((idx - 1) + len) % len;
+                        const next = (idx + 1) % len;
+                        imgs = [ imgs[prev], imgs[idx], imgs[next] ];
+                        // center the clicked project in the middle cover
+                        startIdx = 1;
+                    }
+                    const meta = {
+                        name: card.getAttribute('data-name') || card.querySelector('.card-title')?.textContent || 'PROJECT NAME',
+                        year: card.getAttribute('data-year') || '',
+                        client: card.getAttribute('data-client') || '',
+                        location: card.getAttribute('data-location') || card.getAttribute('data-loc') || '',
+                        status: card.getAttribute('data-status') || ''
+                    };
+                    setProjectMeta(meta);
+                    // open overlay with up to three imgs and the computed start index
+                    openOverlay(imgs, startIdx);
+                });
+
+                // close handlers
+                closeBtn.addEventListener('click', closeOverlay);
+                overlay.addEventListener('click', (e)=>{ if (e.target === overlay) closeOverlay(); });
+                document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && overlay.classList.contains('open')) closeOverlay(); });
+
+                // keyboard navigation for gallery
+                document.addEventListener('keydown', (e)=>{
+                    if (!overlay.classList.contains('open')) return;
+                    if (e.key === 'ArrowRight') { showAt((overlay._pos || 0) + 1); }
+                    if (e.key === 'ArrowLeft') { showAt((overlay._pos || 0) - 1); }
+                });
+
+                // touch swipe support for overlay gallery
+                (function(){
+                    let startX = 0, startY = 0, moving = false;
+                    gallery.addEventListener('touchstart', (ev)=>{
+                        if (!overlay.classList.contains('open')) return;
+                        const t = ev.touches[0]; startX = t.clientX; startY = t.clientY; moving = true;
+                    }, {passive:true});
+                    gallery.addEventListener('touchmove', (ev)=>{ if (!moving) return; }, {passive:true});
+                    gallery.addEventListener('touchend', (ev)=>{
+                        if (!moving) return; moving = false;
+                        const t = ev.changedTouches[0]; const dx = t.clientX - startX; const dy = t.clientY - startY;
+                        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+                            if (dx < 0) showAt((overlay._pos || 0) + 1); else showAt((overlay._pos || 0) - 1);
+                        }
+                    }, {passive:true});
+                })();
+
+                // overlay arrow controls
+                const btnPrev = overlay.querySelector('.overlay-prev');
+                const btnNext = overlay.querySelector('.overlay-next');
+                btnPrev && btnPrev.addEventListener('click', (ev)=>{ ev.stopPropagation(); showAt((overlay._pos || 0) - 1); });
+                btnNext && btnNext.addEventListener('click', (ev)=>{ ev.stopPropagation(); showAt((overlay._pos || 0) + 1); });
+
+                // (overlay hamburger removed) Only the close button closes the gallery now.
+
+                // --- cover click: open a focused detail view for the clicked image ---
+                // create detail view node (lazy)
+                let detailNode = null;
+                function ensureDetailNode(){
+                    if (detailNode) return detailNode;
+                    detailNode = document.createElement('div');
+                    detailNode.className = 'detail-view';
+                    detailNode.innerHTML = `
+                        <div class="detail-backdrop"></div>
+                        <div class="detail-frame" role="dialog" aria-modal="true">
+                            <button class="detail-close" aria-label="Close image">✕</button>
+                            <button class="detail-prev" aria-label="Previous image">‹</button>
+                            <img class="detail-img" src="" alt="Project image">
+                            <button class="detail-next" aria-label="Next image">›</button>
+                        </div>
+                    `;
+                    document.body.appendChild(detailNode);
+
+                    // handlers
+                    const close = detailNode.querySelector('.detail-close');
+                    close.addEventListener('click', closeImageDetail);
+                    detailNode.addEventListener('click', (ev)=>{ if (ev.target === detailNode || ev.target.classList.contains('detail-backdrop')) closeImageDetail(); });
+                    document.addEventListener('keydown', (ev)=>{ if (ev.key === 'Escape' && detailNode.classList.contains('open')) closeImageDetail(); });
+                    return detailNode;
+                }
+
+                function openImageDetail(src){
+                    if (!src) return;
+                    const node = ensureDetailNode();
+                    const img = node.querySelector('.detail-img');
+                    img.src = src;
+                    node.classList.add('open');
+                    // lock background scrolling while detail is open
+                    document.body.style.overflow = 'hidden';
+                    // focus close for accessibility
+                    node.querySelector('.detail-close')?.focus();
+                    // attach prev/next handlers (use overlay._imgs and overlay._pos if available)
+                    const dp = node.querySelector('.detail-prev');
+                    const dn = node.querySelector('.detail-next');
+                    dp && dp.addEventListener('click', ()=>{
+                        if (!overlay._imgs || !overlay._imgs.length) return;
+                        const nextIdx = ((overlay._pos || 0) - 1 + overlay._imgs.length) % overlay._imgs.length;
+                        showAt(nextIdx); // move gallery
+                        // update detail image after small delay so showAt can animate
+                        setTimeout(()=>{ node.querySelector('.detail-img').src = overlay._imgs[nextIdx]; overlay._pos = nextIdx; }, 260);
+                    });
+                    dn && dn.addEventListener('click', ()=>{
+                        if (!overlay._imgs || !overlay._imgs.length) return;
+                        const nextIdx = ((overlay._pos || 0) + 1) % overlay._imgs.length;
+                        showAt(nextIdx);
+                        setTimeout(()=>{ node.querySelector('.detail-img').src = overlay._imgs[nextIdx]; overlay._pos = nextIdx; }, 260);
+                    });
+                }
+
+                function closeImageDetail(){
+                    if (!detailNode) return;
+                    detailNode.classList.remove('open');
+                    // small timeout to let any fade finish before clearing src (avoid flash)
+                    setTimeout(()=>{ const img = detailNode.querySelector('.detail-img'); if (img) img.src = ''; }, 300);
+                    // restore body overflow only if overlay not open
+                    if (!overlay.classList.contains('open')) document.body.style.overflow = '';
+                    // if overlay is open, keep gallery's closeBtn focused
+                    overlay.classList.contains('open') && closeBtn && closeBtn.focus();
+                }
+
+                // attach click handlers to covers
+                covers.forEach(c=>{
+                    c.addEventListener('click', (ev)=>{
+                        ev.stopPropagation();
+                        // read background-image url('...') style
+                        const bg = c.style.backgroundImage || window.getComputedStyle(c).backgroundImage || '';
+                        const m = bg.match(/url\(["']?(.+?)["']?\)/);
+                        const src = m ? m[1] : '';
+                        if (src) openImageDetail(src);
+                    });
+                });
+            })();
+        </script>
+
+    <script>
+        // Reveal cards when they scroll into view (modern scroll animation)
+        (function(){
+            const cards = Array.from(document.querySelectorAll('.card'));
+            if (!cards.length || !('IntersectionObserver' in window)){
+                // fallback: make all visible
+                cards.forEach(c=>c.classList.add('in-view'));
+                return;
+            }
+            const obs = new IntersectionObserver((entries, o)=>{
+                entries.forEach(e=>{
+                    if (e.isIntersecting){
+                        e.target.classList.add('in-view');
+                        // optionally unobserve so animation happens only once
+                        o.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.18 });
+            cards.forEach(c=> obs.observe(c));
+        })();
+    </script>
+
+        <style>
+            /* project overlay styles */
+            /* Make the overlay itself scrollable so users can scroll past the images.
+               Align items to the start so the gallery sits at the top and the extra
+               bottom padding creates the empty space below the pictures. */
+            .project-overlay{position:fixed;inset:0;background:#fff;z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;opacity:0;pointer-events:none;transition:opacity .28s ease;overflow:auto;padding:40px 0 48px}
+            .project-overlay.open{opacity:1;pointer-events:auto}
+            .project-overlay .overlay-close{position:absolute;right:20px;top:20px;background:transparent;border:0;font-size:22px;cursor:pointer;padding:8px;z-index:340}
+                     /* restore gallery to full viewport height so covers display at their previous size;
+                         details remain below the gallery and are revealed by scrolling the overlay */
+                    /* ensure the gallery sits clearly below the overlay chrome (close button)
+                       and keep the covers fully visible by centering them in the available
+                       viewport area. The details band is pushed further down. */
+                    .project-overlay .overlay-gallery{display:flex;width:100%;max-width:1400px;margin:48px 18px 0;box-sizing:border-box;height:calc(100vh - 48px);overflow:hidden;align-items:center;justify-content:center;position:relative;z-index:320}
+
+                    /* spacer below gallery so blank area matches gallery width */
+                    .project-overlay .overlay-spacer{width:100%;max-width:1400px;height:240px;margin:18px auto 36px;padding:0 18px;box-sizing:border-box}
+
+                /* overlay-specific hamburger/menu removed. */
+            /* make covers larger and keep them perfect squares */
+            .project-overlay .cover{flex:0 0 36%;width:36%;max-width:520px;aspect-ratio:1/1;background-size:cover;background-position:center;transform:translateX(var(--tx,120%)) scale(var(--s,1));transition:transform .72s cubic-bezier(.2,.9,.2,1),filter .22s;position:relative;z-index:330}
+            /* subtle dim for covers */
+            .project-overlay .cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,0.02))}
+            /* pop-up on hover */
+            .project-overlay .cover:hover{--s:1.06;z-index:30;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.45))}
+            /* overlay nav arrows (desktop + mobile). Positioned over gallery to control showAt() */
+            .project-overlay .overlay-prev, .project-overlay .overlay-next{
+                position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border-radius:8px;border:0;background:rgba(0,0,0,0.36);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,0.32)}
+            .project-overlay .overlay-prev{left:10px}
+            .project-overlay .overlay-next{right:10px}
+            .project-overlay .overlay-prev:active, .project-overlay .overlay-next:active{transform:translateY(-50%) scale(.98)}
+            @media (max-width:640px){
+                .project-overlay .overlay-prev, .project-overlay .overlay-next{width:48px;height:48px;font-size:22px;background:rgba(0,0,0,0.46)}
+            }
+
+            /* detail view arrows */
+            .detail-frame .detail-prev, .detail-frame .detail-next{position:relative;z-index:4;border:0;background:transparent;color:#fff;font-size:36px;padding:8px 12px;cursor:pointer}
+            .detail-frame .detail-prev{margin-right:8px}
+            .detail-frame .detail-next{margin-left:8px}
+            @media (max-width:1200px){.project-overlay .cover{flex:0 0 33.333%;width:33.333%;max-width:none}}
+            @media (max-width:900px){.project-overlay .cover{flex-basis:50%;width:50%}}
+            @media (max-width:640px){.project-overlay .cover{flex-basis:100%;width:100%}}
+            /* creative horizontal band and modern project meta */
+            .overlay-band{width:100%;max-width:1400px;margin:18px auto 0;padding:0 18px;box-sizing:border-box}
+            .overlay-band .band-decor{height:48px;overflow:hidden;border-radius:6px}
+            .overlay-band .project-meta{display:flex;gap:22px;align-items:center;padding:18px 14px;background:linear-gradient(180deg,#fff,#fbfbfb);border-radius:8px;margin-top:12px;box-shadow:0 6px 20px rgba(0,0,0,0.04)}
+            .overlay-band .meta-col{flex:1;min-width:120px}
+            .overlay-band .meta-label{font-family:Montserrat,Arial,sans-serif;font-weight:800;font-size:0.92rem;color:#444;letter-spacing:0.9px;text-transform:uppercase}
+            .overlay-band .meta-value{font-family:Montserrat,Arial,sans-serif;font-weight:600;font-size:1.16rem;color:#111;margin-top:8px;line-height:1.15}
+            @media (max-width:900px){.overlay-band .project-meta{flex-direction:column;align-items:flex-start;gap:8px}}
+            /* Additional responsive tweaks for smartphones and small devices */
+            @media (max-width:900px){
+                /* make category nav vertical layout for mobile like the screenshot */
+                .category-nav{padding:0 12px;margin:18px auto}
+                .cat-row{flex-direction:column;gap:0;border:none;padding:0}
+                .cat-row:first-child{justify-content:flex-start}
+                .cat-row:last-child{justify-content:flex-start;gap:0;margin-top:0}
+                .cat-item{
+                    padding:18px 0;
+                    font-size:1.1rem;
+                    text-align:center;
+                    border-bottom:1px solid rgba(0,0,0,0.12);
+                    width:100%;
+                    font-weight:600;
+                    color:#333;
+                    transition:background-color 0.2s ease, color 0.2s ease;
+                }
+                .cat-item:last-child{border-bottom:none}
+                .cat-item.active{
+                    background-color:#000;
+                    color:#fff;
+                    font-weight:700;
+                }
+                .cat-item:hover{
+                    background-color:#f5f5f5;
+                    color:#000;
+                }
+                .cat-item.active:hover{
+                    background-color:#000;
+                    color:#fff;
+                }
+                .cat-underline{display:none} /* Hide underline indicator on mobile for cleaner look */
+            }
+
+            /* Extra mobile styling for very small screens */
+            @media (max-width:480px){
+                .category-nav{padding:0 8px;margin:15px auto}
+                .cat-item{
+                    padding:20px 0;
+                    font-size:1.05rem;
+                }
+                .category-description{
+                    padding:0 15px;
+                    margin:30px auto;
+                }
+                .description-content p{
+                    font-size:1rem;
+                    line-height:1.6;
+                }
+            }
+
+            @media (max-width:900px){
+                /* pages viewport tighter margins on small screens */
+                .pages-viewport{max-width:100%;margin:12px auto}
+
+                /* reduce spacing between cards and slightly larger card titles for readability */
+                .cards-grid{gap:14px}
+                .card-title{font-size:0.98rem;padding:12px}
+
+                /* overlay adjustments: increase top offset so details don't cover images on small screens */
+                .project-overlay{padding:48px 0 32px}
+                .project-overlay .overlay-gallery{margin:28px 12px 0;height:calc(70vh);align-items:center}
+                .project-overlay .cover{flex-basis:50%;width:50%;max-width:none}
+                .project-overlay .cover:hover{--s:1.03}
+                .project-overlay .overlay-close{right:12px;top:12px;padding:10px;font-size:20px}
+
+                /* spacer smaller on phones (but still leaves room) */
+                .project-overlay .overlay-spacer{height:180px;margin:12px auto 20px}
+
+                /* meta fonts scale down on phones */
+                .overlay-band .meta-label{font-size:0.78rem}
+                .overlay-band .meta-value{font-size:1rem}
+            }
+
+            @media (max-width:640px){
+                /* stack covers vertically to make them touch-friendly and bring them visually in front
+                   - overlay-gallery gets a higher stacking context so covers appear above the details
+                   - increase spacer so project details sit further down the scroll area */
+                .project-overlay .overlay-gallery{flex-direction:column;height:auto;padding-top:12px;padding-bottom:12px;position:relative;z-index:40;order:0;gap:36px}
+                .project-overlay .cover{flex-basis:100%;width:100%;max-width:720px;margin:28px auto;aspect-ratio:1/1;z-index:30}
+                .project-overlay .cover:hover{--s:1.02}
+
+                /* push the project meta/details further down the overlay and keep it below the covers */
+                .project-overlay .overlay-spacer{height:360px;margin:18px auto 36px}
+                .project-overlay .overlay-band{position:relative;z-index:10;order:2;margin-top:40px}
+
+                /* increase CTA hit area and make overlay meta easier to read */
+                .cta{padding:14px 16px;font-size:1rem}
+                .project-overlay .overlay-close{right:10px;top:10px;width:44px;height:44px}
+
+                /* collapse category rows into a single column on very small devices */
+                .cat-row{flex-direction:row;flex-wrap:wrap;gap:8px}
+                .cat-item{flex:1 1 auto;padding:10px 6px;font-size:0.95rem}
+            }
+        </style>
+        
+        
+</body>
+</html>
